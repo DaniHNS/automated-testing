@@ -11,6 +11,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
+                sh 'brew install node@14'
                 // Install Cypress dependencies
                 sh 'npm install'
             }
