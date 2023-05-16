@@ -5,9 +5,7 @@ pipeline {
             steps {
                 script {
                     // Set PATH environment variable to include Homebrew
-                    environment {
-                        PATH = "/usr/local/bin:${env.PATH}"
-                    }
+                    env.PATH = "/usr/local/bin:${env.PATH}"
                     
                     // Install Node.js using Homebrew
                     sh 'brew install node@14'
@@ -18,11 +16,10 @@ pipeline {
         stage('Build') {
             steps {
                 // Checkout source code from version control (e.g., Git)
-                git 'https://github.com/DaniHNS/automated-testing.git'
+                git url: 'https://github.com/DaniHNS/automated-testing.git'
                 
                 // Install project dependencies
                 sh 'npm install'
-              
             }
         }
         
@@ -41,4 +38,5 @@ pipeline {
             }
         }
     }
+    // Rest of your pipeline configuration
 }
