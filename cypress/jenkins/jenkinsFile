@@ -29,14 +29,6 @@ pipeline {
                 sh 'npx cypress run --spec "cypress/e2e/regression.cy.js"'
             }
         }
-        
-        // Additional stages as needed
-        
-        stage('Cleanup') {
-            steps {
-                // Cleanup steps, if any
-            }
-        }
+          
     }
-    // Rest of your pipeline configuration
 }
