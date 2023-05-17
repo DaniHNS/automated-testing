@@ -20,7 +20,7 @@ describe('The Home Page', () => {
 
       cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap').click()
       cy.get('opb-room-details #available-rates > div > div:first-child .select-button-wrap > button', {timeout: 5000}).should('be.visible').click() 
-      cy.get('app-next-step-button #next-step-overscroll').click()
+      cy.get('app-next-step-button #next-step-overscroll', {timeout: 2000}).click()
       
     
       cy.get('opb-address-form form > #address-form-fields-wrap', {timeout: 1000}).should('be.visible') //lazy loaded
