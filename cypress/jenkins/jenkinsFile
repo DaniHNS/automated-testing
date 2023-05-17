@@ -1,26 +1,34 @@
 pipeline {
     agent any
-
     stages {
-        stage('Checkout') {
+        stage('Install Homebrew and Node.js') {
             steps {
-                // Checkout the source code from Git
-                git 'https://github.com/DaniHNS/automated-testing.git'
+                script {
+                    // Set PATH environment variable to include Homebrew
+                    env.PATH = "/usr/local/bin:${env.PATH}"
+                    
+                    // Install Node.js using Homebrew
+                    sh 'brew install node@14'
+                }
             }
         }
-
-        stage('Install Dependencies') {
+        
+        stage('Build') {
             steps {
-                // Install Cypress dependencies
-                sh 'cd automated-testing && npm install'
+                // Checkout source code from version control (e.g., Git)
+                git url: 'https://github.com/DaniHNS/automated-testing.git'
+                
+                // Install project dependencies
+                sh 'npm install'
             }
         }
-
+        
         stage('Run Tests') {
             steps {
                 // Run Cypress tests
                 sh 'npx cypress run --spec "cypress/e2e/regression.cy.js"'
             }
         }
+          
     }
 }
