@@ -38,10 +38,8 @@ pipeline {
         always {
             mail to: "plotkin@hotelnetsolutions.de",
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-            mimeType: "text/html",
-            body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} <br /> More Info can be found here: ${env.BUILD_URL}  <br />
-            <p>Jenkins build log:</p>
-            <pre>${build.getLog()}</pre>"
+            // mimeType: "text/html",
+            body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} More Info can be found here: ${env.BUILD_URL} Jenkins build log: ${build.getLog()}"
             // attachmentsPattern: '*.csv'
         }
     }
