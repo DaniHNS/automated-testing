@@ -32,11 +32,11 @@ pipeline {
           
     }
     post {
-        always {
-            emailext body: 'A Test EMail', subject:  "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-        }
+        // always {
+        //     emailext body: 'A Test EMail', subject:  "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+        // }
         success {
             mail to: plotkin@hotelnetsolutions.de, subject: ‘The Pipeline step success :)‘
-    }
+        }
     }
 }
