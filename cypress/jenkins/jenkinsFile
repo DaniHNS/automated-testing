@@ -35,10 +35,10 @@ pipeline {
         // always {
         //     emailext body: 'A Test EMail', subject:  "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
         // }
-        success {
+        always {
             mail to: "plotkin@hotelnetsolutions.de",
-            subject: "Test Email",
-            body: "Test"
+            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+            body: "Test ${currentBuild.currentResult}"
         }
     }
 }
