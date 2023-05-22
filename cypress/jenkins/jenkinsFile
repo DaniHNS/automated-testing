@@ -32,11 +32,8 @@ pipeline {
           
     }
     post {
-        // always {
-        //     emailext body: 'A Test EMail', subject:  "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
-        // }
         always {
-            mail to: "plotkin@hotelnetsolutions.de",
+            mail to: "plotkin@hotelnetsolutions.de, richter@hotelnetsolutions.de",
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
             // mimeType: "text/html",
             body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} More Info can be found here: ${env.BUILD_URL}"
