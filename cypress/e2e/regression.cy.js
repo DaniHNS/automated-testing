@@ -3,7 +3,7 @@ describe('The Home Page', () => {
     cy.viewport(1960, 1400) // Set the viewport width and height
   })
 
-    it('successfully loads', () => {
+    it('Successfully Books', () => {
       cy.visit('https://onepagebooking.com/hotelns5') // change URL to match your dev URL
       // cy.get('a.nav-element-link[href="/hotelns5/location"]', {timeout: 4000}).click() // change URL to match your dev URL
       cy.get('app-masthead-room-options #guests-config-toggle .icons-wrap').click() 
