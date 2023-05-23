@@ -13,10 +13,10 @@ describe('The Home Page', () => {
       // cy.get('app-child-config .child-config-row .child-age-item ul.dropdown-menu li:nth-child(3)', {timeout: 300}).click() 
       cy.get('app-masthead-room-options #guests-config-toggle .icons-wrap').click() 
 
-      cy.get('#opb-calendar .first-month .day:contains("22")').should('be.visible')
-      cy.get('#opb-calendar .first-month .day:contains("24")').should('be.visible')
-      cy.get('#opb-calendar .first-month .day:contains("22")', {timeout: 300}).click() 
-      cy.get('#opb-calendar .first-month .day:contains("24")', {timeout: 300}).click()
+      cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("22")').should('be.visible')
+      cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("24")').should('be.visible')
+      cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("22")', {timeout: 300}).click() 
+      cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("24")', {timeout: 300}).click()
 
       cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap').click()
       cy.get('opb-room-details #available-rates > div > div:first-child .select-button-wrap > button', {timeout: 5000}).should('be.visible').click() 
