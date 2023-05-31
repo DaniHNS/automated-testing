@@ -1,17 +1,17 @@
 pipeline {
     agent any
     stages {
-        stage('Install Homebrew and Node.js') {
-            steps {
-                script {
-                    // Set PATH environment variable to include Homebrew
-                    env.PATH = "/usr/local/bin:${env.PATH}"
+        // stage('Install Homebrew and Node.js') {
+        //     steps {
+        //         script {
+        //             // Set PATH environment variable to include Homebrew
+        //             env.PATH = "/usr/local/bin:${env.PATH}"
                     
-                    // Install Node.js using Homebrew
-                    sh 'brew install node@14'
-                }
-            }
-        }
+        //             // Install Node.js using Homebrew
+        //             sh 'brew install node@14'
+        //         }
+        //     }
+        // }
         
         stage('Build') {
             steps {
