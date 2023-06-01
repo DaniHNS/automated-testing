@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    tools {nodejs "node"}
     stages {
         // stage('Install Homebrew and Node.js') {
         //     steps {
@@ -17,7 +18,7 @@ pipeline {
             steps {
                 // Checkout source code from version control (e.g., Git)
                 git url: 'https://github.com/DaniHNS/automated-testing.git'
-                
+                sh 'npm -v'
                 // Install project dependencies
                 sh 'npm install'
             }
