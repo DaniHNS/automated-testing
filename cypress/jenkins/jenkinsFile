@@ -21,14 +21,15 @@ pipeline {
                 sh 'npm -v'
                 // Install project dependencies
                 sh 'npm install'
-                sh 'apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb'
+                // this step fails unless we run the job headlessly
+                // sh 'apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb'
             }
         }
         
         stage('Run Tests') {
             steps {
                 // Run Cypress tests
-                sh 'npx cypress run --spec "cypress/e2e/regression.cy.js"'
+                sh 'npx cypress run --spec "cypress/e2e/regression.cy.js" --headless'
             }
         }
           
