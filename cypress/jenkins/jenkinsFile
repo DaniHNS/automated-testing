@@ -31,7 +31,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 // Run Cypress tests
-                sh 'npx cypress run --spec "cypress/e2e/regression.cy.js"'
+                sh 'npx cypress run --spec "cypress/e2e/regression.cy.js" --headless'
             }
         }
           
