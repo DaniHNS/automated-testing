@@ -1,33 +1,17 @@
 pipeline {
     agent any
     tools {nodejs "node"}
-    stages {
-        // stage('Install Homebrew and Node.js') {
-        //     steps {
-        //         script {
-        //             // Set PATH environment variable to include Homebrew
-        //             env.PATH = "/usr/local/bin:${env.PATH}"
-                    
-        //             // Install Node.js using Homebrew
-        //             sh 'brew install node@14'
-        //         }
-        //     }
-        // }
-        
+    stages {        
         stage('Build') {
             steps {
                 // Checkout source code from version control (e.g., Git)
                 git url: 'https://github.com/DaniHNS/automated-testing.git'
+                // npm check
                 sh 'npm -v'
                 // Install project dependencies
                 sh 'npm install'
-                // this step fails unless we run the job headlessly
-                // sh 'apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb'
-                
-                // sh 'apt-get install --fix-missing -y xvfb'
             }
-        }
-        
+        }  
         stage('Run Tests') {
             steps {
                 // Run Cypress tests
