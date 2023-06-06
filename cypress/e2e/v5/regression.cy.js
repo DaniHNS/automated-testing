@@ -12,11 +12,12 @@ describe('The Home Page', () => {
       // cy.get('app-child-config .child-config-row .child-age-item .dropdown.open', {timeout: 300}).click() 
       // cy.get('app-child-config .child-config-row .child-age-item ul.dropdown-menu li:nth-child(3)', {timeout: 300}).click() 
       cy.get('app-masthead-room-options #guests-config-toggle .icons-wrap').click() 
-
-      cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("12")').should('be.visible')
-      cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("14")').should('be.visible')
-      cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("12")', {timeout: 300}).click() 
-      cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("14")', {timeout: 300}).click()
+      cy.get('#calendar-and-sticky-wrap #opb-calendar + button.btn').should('be.visible')
+      cy.get('#calendar-and-sticky-wrap #opb-calendar + button.btn', {timeout: 300}).click() 
+      cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("24")').should('be.visible')
+      cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("26")').should('be.visible')
+      cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("24")', {timeout: 300}).click() 
+      cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("26")', {timeout: 300}).click()
 
       cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap').click()
       cy.get('opb-room-details #available-rates > div > div:first-child .select-button-wrap > button', {timeout: 5000}).should('be.visible').click() 
