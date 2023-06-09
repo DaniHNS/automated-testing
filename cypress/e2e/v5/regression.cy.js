@@ -11,7 +11,7 @@ describe('The Home Page', () => {
       // cy.get('#guests-config-wrap ul li.children-amount-config .row div:last-child .person-number-config-button:first-child button', {timeout: 300}).click() 
       // cy.get('app-child-config .child-config-row .child-age-item .dropdown.open', {timeout: 300}).click() 
       // cy.get('app-child-config .child-config-row .child-age-item ul.dropdown-menu li:nth-child(3)', {timeout: 300}).click() 
-      cy.get('app-masthead-room-options #guests-config-toggle .icons-wrap').click() 
+      cy.get('app-masthead-room-options #guests-config-toggle .icons-wrap', {timeout: 1000}).click() 
       cy.get('#calendar-and-sticky-wrap #opb-calendar + button.btn', {timeout: 1000}).should('be.visible')
       cy.get('#calendar-and-sticky-wrap #opb-calendar + button.btn', {timeout: 1000}).click() 
       cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("24")').should('be.visible')
@@ -19,8 +19,13 @@ describe('The Home Page', () => {
       cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("24")', {timeout: 300}).click() 
       cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("26")', {timeout: 300}).click()
 
-      cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap').click()
-      cy.get('opb-room-details #available-rates > div > div:first-child .select-button-wrap > button', {timeout: 5000}).should('be.visible').click() 
+      cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap', {timeout: 1000}).click()
+      cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap', {timeout: 1000}).click()
+  
+      cy.wait(2000);
+      cy.get('opb-room-details #available-rates > div > div:first-child .select-button-wrap > button', {timeout: 1000}).should('not.be.disabled')
+      
+      cy.get('opb-room-details #available-rates > div > div:first-child .select-button-wrap > button', {timeout: 1000}).click()
       cy.get('app-next-step-button #next-step-overscroll', {timeout: 2000}).click()
       
     
