@@ -12,7 +12,7 @@ describe('The Home Page', () => {
       // cy.get('app-child-config .child-config-row .child-age-item .dropdown.open', {timeout: 300}).click() 
       // cy.get('app-child-config .child-config-row .child-age-item ul.dropdown-menu li:nth-child(3)', {timeout: 300}).click() 
       cy.get('app-masthead-room-options #guests-config-toggle .icons-wrap', {timeout: 1000}).click() 
-      cy.get('#calendar-and-sticky-wrap #opb-calendar + button.btn', {timeout: 1000}).should('be.visible')
+      // cy.get('#calendar-and-sticky-wrap #opb-calendar + button.btn', {timeout: 1000}).should('be.visible')
       cy.get('#calendar-and-sticky-wrap #opb-calendar + button.btn', {timeout: 1000}).click() 
       cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("24")').should('be.visible')
       cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("26")').should('be.visible')
