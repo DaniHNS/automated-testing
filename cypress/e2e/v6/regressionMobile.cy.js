@@ -18,7 +18,7 @@ describe('The Home Page', () => {
       // cy.get('app-child-config .child-config-row .child-age-item .dropdown.open', {timeout: 300}).click() 
       // cy.get('app-child-config .child-config-row .child-age-item ul.dropdown-menu li:nth-child(3)', {timeout: 300}).click() 
       // cy.get('app-masthead-room-options #guests-config-toggle .icons-wrap').click() 
-      //cy.wait(1000);
+      cy.wait(1000);
       //cy.get('opb6-calendar-mobile-modal opb6-calendar-mobile .months-wrap.table-wrap > div:nth-child(2) opb6-month-table .more-than-two-months.is-mobile p.day:contains("25")', {timeout: 1000}).should('be.visible')
       //cy.get('opb6-calendar-mobile-modal opb6-calendar-mobile .months-wrap.table-wrap > div:nth-child(2) opb6-month-table .more-than-two-months.is-mobile p.day:contains("26")', {timeout: 1000}).should('be.visible')
       cy.get('opb6-calendar-mobile-modal opb6-calendar-mobile .months-wrap.table-wrap > div:nth-child(2) opb6-month-table .more-than-two-months.is-mobile p.day:contains("25")', {timeout: 1000}).click() 
