@@ -27,7 +27,9 @@ pipeline {
             mail to: "plotkin@hotelnetsolutions.de",
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
             // mimeType: "text/html",
-            body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} More Info can be found here: ${env.BUILD_URL}"
+            body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} More Info can be found here: ${env.BUILD_URL} /n"  
+            "Video can be found here: http://jenkins.hns.hotelnetsolutions.de/v5/ /n
+            Video can be found here: http://jenkins.hns.hotelnetsolutions.de/v6/ "
             // attachmentsPattern: '*.csv'
         }
     }
