@@ -17,7 +17,7 @@ pipeline {
                 // Run Cypress tests
                 // sh 'npx cypress run --spec "cypress/e2e/regression.cy.js" --headless'
                 // sh 'npx cypress run "cypress/e2e/v5/regression.cy.js"'
-                sh 'npx cypress run "cypress/e2e/*/regression.cy.js" --headless'
+                sh 'npx cypress run "cypress/e2e/v5/**.cy.js" --headless'
             }
         }
           
@@ -26,12 +26,9 @@ pipeline {
         always {
             mail to: "plotkin@hotelnetsolutions.de",
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-            // mimeType: "text/html",
-             body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
-        More Info can be found here: ${env.BUILD_URL}
-        Video can be found here: http://jenkins.hns.hotelnetsolutions.de/v5
-        Video can be found here: http://jenkins.hns.hotelnetsolutions.de/v6"""
-            // attachmentsPattern: '*.csv'
+            body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
+            More Info can be found here: ${env.BUILD_URL}
+            Video can be found here: http://jenkins.hns.hotelnetsolutions.de/v5"""
         }
     }
 }
