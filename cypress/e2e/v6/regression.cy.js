@@ -8,19 +8,18 @@ describe('The Home Page', () => {
   })
 
     it('Successfully Books', () => {
-      cy.visit('https://onepagebooking.com/hnsautotest6') // change URL to match your dev URL
+      cy.visit('https://onepagebooking.com/hnsautotest6?arrival=24.07.23&departure=26.07.23&rooms=1&adults=1') // change URL to match your dev URL
       // cy.get('a.nav-element-link[href="/hotelns5/location"]', {timeout: 4000}).click() // change URL to match your dev URL
-      cy.get('opb6-duration .quick-book-section-wrap').click() 
-      // cy.get('#guests-config-wrap ul li:first-child .row div:last-child .person-number-config-button:first-child button', {timeout: 300}).click() // parents count +1
-      // cy.get('#guests-config-wrap ul li.children-amount-config .row div:last-child .person-number-config-button:first-child button', {timeout: 300}).click() 
-      // cy.get('app-child-config .child-config-row .child-age-item .dropdown.open', {timeout: 300}).click() 
-      // cy.get('app-child-config .child-config-row .child-age-item ul.dropdown-menu li:nth-child(3)', {timeout: 300}).click() 
-      // cy.get('app-masthead-room-options #guests-config-toggle .icons-wrap').click() 
-      cy.wait(1000);
-      cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("22")', {timeout: 1000}).should('be.visible')
-      cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")', {timeout: 1000}).should('be.visible')
-      cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("22")', {timeout: 1000}).click() 
-      cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")', {timeout: 1000}).click()
+
+      //Test url parameter
+      // cy.get('opb6-duration .quick-book-section-wrap').click() 
+      // cy.wait(1000);
+      // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("22")', {timeout: 1000}).should('be.visible')
+      // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")', {timeout: 1000}).should('be.visible')
+      // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("22")', {timeout: 1000}).click() 
+      // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")', {timeout: 1000}).click()
+
+      // End of Test
       cy.wait(1000);
       cy.get('opb6-rooms-grid .rooms-grid .rooms-grid-item:first-child .btn-select').click()
       cy.wait(1000);
