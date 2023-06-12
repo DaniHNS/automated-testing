@@ -12,11 +12,11 @@ describe('The Home Page', () => {
       // cy.get('app-child-config .child-config-row .child-age-item .dropdown.open', {timeout: 300}).click() 
       // cy.get('app-child-config .child-config-row .child-age-item ul.dropdown-menu li:nth-child(3)', {timeout: 300}).click() 
       // cy.get('app-masthead-room-options #guests-config-toggle .icons-wrap').click() 
-
-      cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("22")').should('be.visible')
-      cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")').should('be.visible')
-      cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("22")', {timeout: 300}).click() 
-      cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")', {timeout: 300}).click()
+      cy.wait(1000);
+      cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("22")', {timeout: 1000}).should('be.visible')
+      cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")', {timeout: 1000}).should('be.visible')
+      cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("22")', {timeout: 1000}).click() 
+      cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")', {timeout: 1000}).click()
       cy.wait(1000);
       cy.get('opb6-rooms-grid .rooms-grid .rooms-grid-item:first-child .btn-select').click()
       cy.wait(1000);

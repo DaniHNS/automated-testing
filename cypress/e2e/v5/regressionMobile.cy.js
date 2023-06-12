@@ -10,10 +10,10 @@ describe('The Home Page', () => {
     
         // cy.get('app-masthead-room-options #guests-config-toggle .icons-wrap').click() 
   
-        cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("12")').should('be.visible')
-        cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("14")').should('be.visible')
-        cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("12")', {timeout: 300}).click() 
-        cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("14")', {timeout: 300}).click()
+        cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("12")', {timeout: 1000}).should('be.visible')
+        cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("14")', {timeout: 1000}).should('be.visible')
+        cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("12")', {timeout: 1000}).click() 
+        cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("14")', {timeout: 1000}).click()
         // cy.get('app-rm-chat .bubble.bubble-close').then(($element) => {
         //   if ($element.length > 0) {
         //     // The element is present, perform assertions or actions
