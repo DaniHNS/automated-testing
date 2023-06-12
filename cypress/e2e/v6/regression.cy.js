@@ -20,7 +20,7 @@ describe('The Home Page', () => {
       // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")', {timeout: 1000}).click()
 
       // End of Test
-      cy.wait(1000);
+      cy.wait(4000);
       cy.get('opb6-rooms-grid .rooms-grid .rooms-grid-item:first-child .btn-select').trigger('mouseover').click();
       cy.wait(1000);
       cy.get('opb6-room-details .rates .rate-row:first-child opb6-rate-details .btn-select', {timeout: 2000}).should('be.visible') 
