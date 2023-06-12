@@ -17,7 +17,7 @@ pipeline {
                 // Run Cypress tests
                 // sh 'npx cypress run --spec "cypress/e2e/regression.cy.js" --headless'
                 // sh 'npx cypress run "cypress/e2e/v5/regression.cy.js"'
-                sh 'npx cypress run "cypress/e2e/v6/**.cy.js" --headless'
+                sh 'npx cypress run "cypress/e2e/v6/*.cy.js" --headless'
             }
         }
           
