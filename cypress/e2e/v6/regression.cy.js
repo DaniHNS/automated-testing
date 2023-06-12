@@ -1,6 +1,10 @@
 describe('The Home Page', () => {
   beforeEach(() => {
     cy.viewport(1960, 1400) // Set the viewport width and height
+        // Condition the test to run only on Chrome
+        // if (Cypress.isBrowser('chrome')) {
+        //   cy.only('chrome');
+        // }
   })
 
     it('Successfully Books', () => {
