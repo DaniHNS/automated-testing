@@ -29,7 +29,7 @@ pipeline {
              body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
         More Info can be found here: ${env.BUILD_URL}
         Video can be found here: http://jenkins.hns.hotelnetsolutions.de/v6
-        Trigger the Job: http://jenkins.hns.hotelnetsolutions.de:8081/job/BookingE2E-V6/build?token=Gthr1$8"""
+        Trigger the Job: http://jenkins.hns.hotelnetsolutions.de:8081/job/BookingE2E-V6/build?token=Gthr1_8"""
         }
     }
 }
