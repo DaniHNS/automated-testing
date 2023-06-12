@@ -21,7 +21,7 @@ describe('The Home Page', () => {
 
       // End of Test
       cy.wait(1000);
-      cy.get('opb6-rooms-grid .rooms-grid .rooms-grid-item:first-child .btn-select').click()
+      cy.get('opb6-rooms-grid .rooms-grid .rooms-grid-item:first-child .btn-select').trigger('mouseover').click();
       cy.wait(1000);
       cy.get('opb6-room-details .rates .rate-row:first-child opb6-rate-details .btn-select', {timeout: 2000}).should('be.visible') 
       cy.get('opb6-room-details .rates .rate-row:first-child opb6-rate-details .btn-select', {timeout: 2000}).click()
