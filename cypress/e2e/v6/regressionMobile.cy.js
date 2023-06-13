@@ -56,8 +56,8 @@ describe('The Home Page', () => {
       // cy.get('#booking-wrap .optin-wrap input[name="cb-red-carpet"] + label[for="cb-acceptAgbs-1"]').click({ force: true })
       cy.scrollTo('bottom')
       cy.get('#booking-button-wrap .booking-button button', {timeout: 1000}).should('be.visible')
-      cy.get('#booking-button-wrap .booking-button', {timeout: 1000}).click()
-      cy.get('#booking-button-wrap .booking-button button').trigger('click')
+      cy.get('#booking-button-wrap .booking-button button', {timeout: 1000}).trigger('mouseover').click();
+      // cy.get('#booking-button-wrap .booking-button button').trigger('click')
       cy.wait(2000);
       cy.location('href').should('include', 'https://onepagebooking.com/hnsautotest6/confirmation');
   
