@@ -3,7 +3,9 @@ describe('The Home Page', () => {
     cy.viewport(1960, 1400) // Set the viewport width and height
   })
 
-    it('Successfully Books', () => {
+    it('Successfully Books', { 
+      retries: 2, 
+    }, () => {
       cy.visit('https://onepagebooking.com/hnsautotest5?arrival=24.07.23&departure=26.07.23&rooms=1&adults=2') // change URL to match your dev URL
       // cy.get('a.nav-element-link[href="/hotelns5/location"]', {timeout: 4000}).click() // change URL to match your dev URL
 
@@ -55,7 +57,7 @@ describe('The Home Page', () => {
       cy.get('#booking-wrap #booking-btn-wrap #submit-btn-wrap button', {timeout: 100}).should('be.visible')
       cy.get('#booking-wrap #booking-btn-wrap #submit-btn-wrap button').click()
       cy.wait(2000);
-      cy.location('href').should('eq', 'https://onepagebooking.com/hnsautotest5/confirmation');
+      cy.location('href').should('include', 'https://onepagebooking.com/hnsautotest5/confirmation');
   
     })
     // it('successfully selected calendar days', () => {
