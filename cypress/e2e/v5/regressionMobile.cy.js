@@ -40,7 +40,7 @@ describe('The Home Page', () => {
         cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row:first-child .dropdown.open ul.dropdown-menu li:first-child a').click() 
         cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#prename').type('Test')
         cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#name').type('Test') 
-        cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#email').type('plotkin@hotelnetsolutions.de')
+        cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#email').type('testing@hotelnetsolutions.com')
        
         cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#telnumber').type('0305555555') 
         cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#street').type('Genthiner Str.') 
