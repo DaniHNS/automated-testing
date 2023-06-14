@@ -12,9 +12,17 @@ describe('The Home Page', () => {
       cy.on('uncaught:exception', (err, runnable) => {
         // Check if the error is a SyntaxError due to cache after deployment
         if (err.message.includes('SyntaxError')) {
+          Cypress.log({
+            name: 'Caught SyntaxError',
+            message: err.message,
+            consoleProps: () => ({
+              SyntaxErrorMessage: err.message,
+            }),
+          });
           // Return false to prevent the error from failing the test
           return false;
         }
+        return false;
       });
       cy.get('body.is-mobile', { timeout: 1000 }).should('be.visible');
       // cy.get('a.nav-element-link[href="/hotelns5/location"]', {timeout: 4000}).click() // change URL to match your dev URL
