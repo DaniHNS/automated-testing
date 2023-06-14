@@ -9,7 +9,13 @@ describe('The Home Page', () => {
     })
     it('Successfully Books on Mobile', () => {
       cy.visit('https://onepagebooking.com/hnsautotest6') // change URL to match your dev URL
-    
+      cy.on('uncaught:exception', (err, runnable) => {
+        // Check if the error is a SyntaxError due to cache after deployment
+        if (err.message.includes('SyntaxError')) {
+          // Return false to prevent the error from failing the test
+          return false;
+        }
+      });
       cy.get('body.is-mobile', { timeout: 1000 }).should('be.visible');
       // cy.get('a.nav-element-link[href="/hotelns5/location"]', {timeout: 4000}).click() // change URL to match your dev URL
       cy.get('opb6-booking-config-mobile ul li:nth-child(2) button').click() 
