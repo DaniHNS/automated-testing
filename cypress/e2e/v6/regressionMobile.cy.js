@@ -8,7 +8,8 @@ describe('The Home Page', () => {
       })
     })
     it('Successfully Books on Mobile', () => {
-      cy.visit('https://onepagebooking.com/hnsautotest6') // change URL to match your dev URL
+      const time = new Date().getTime();
+      cy.visit('https://onepagebooking.com/hnsautotest6?t='+time) // change URL to match your dev URL
       cy.on('uncaught:exception', (err, runnable) => {
         // Check if the error is a SyntaxError due to cache after deployment
         if (err.message.includes('SyntaxError')) {
