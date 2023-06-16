@@ -4,8 +4,14 @@ describe('The Home Page', () => {
   })
 
     it('Successfully Books Opb-V6', () => {
-      const month = new Date().getMonth() % 12 + 1;
-      const year = new Date().getFullYear();
+
+      let year = new Date().getFullYear();
+      let month = new Date().getMonth() % 12 + 2; // Next month always
+
+      // Edge case end of the year handling
+      year = month == 13 ? (year + 1) : year;
+      month = month == 13 ? 1 : month;
+
       cy.visit('https://onepagebooking.com/hnsautotest6?arrival=24.' + month + '.' + year + '&departure=26.' + month + '.' + year + '&rooms=1&adults=1') // change URL to match your dev URL
 
       cy.on('uncaught:exception', (err, runnable) => {

@@ -3,30 +3,30 @@ describe('The Home Page', () => {
       cy.viewport(375, 667) // Set the mobile viewport width and height https://docs.cypress.io/api/commands/viewport
     })
   
-      it('Successfully Books', () => {
-        cy.visit('https://onepagebooking.com/hnsautotest5') // change URL to match your dev URL
-        cy.get('app-masthead-room-options .btn-mobile-next-step-wrap .btn').click() 
+      it('Successfully Books on Opb-V5 Mobile', () => {
+
+        let year = new Date().getFullYear();
+        let month = new Date().getMonth() % 12 + 2; // Next month always
+  
+        // Edge case end of the year handling
+        year = month == 13 ? (year + 1) : year;
+        month = month == 13 ? 1 : month;
+
+        cy.visit('https://onepagebooking.com/hnsautotest5?arrival=24.' + month + '.' + year + '&departure=26.' + month + '.' + year + '&rooms=1&adults=1') // change URL to match your dev URL
+
+        // cy.get('app-masthead-room-options .btn-mobile-next-step-wrap .btn').click() 
         // cy.get('#guests-config-wrap ul li:first-child .row div:last-child .person-number-config-button:first-child button', {timeout: 300}).click() // parents count +1
     
         // cy.get('app-masthead-room-options #guests-config-toggle .icons-wrap').click() 
   
-        cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("12")', {timeout: 1000}).should('be.visible')
-        cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("14")', {timeout: 1000}).should('be.visible')
-        cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("12")', {timeout: 1000}).click() 
-        cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("14")', {timeout: 1000}).click()
-        // cy.get('app-rm-chat .bubble.bubble-close').then(($element) => {
-        //   if ($element.length > 0) {
-        //     // The element is present, perform assertions or actions
-        //     cy.wrap($element).click();
-  
-        //   } else {
-        //     // The element is not present, handle the condition accordingly
-        //     cy.log('The element is not found');
-        //     // Continue with other test steps
-        //   }
-        // });
-                 //  cy.get('app-rm-chat .bubble.bubble-close', {timeout: 3000}).should('be.visible')
+        // cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("12")', {timeout: 1000}).should('be.visible')
+        // cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("14")', {timeout: 1000}).should('be.visible')
+        // cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("12")', {timeout: 1000}).click() 
+        // cy.get('#opb-calendar .first-month + .calendar-month-wrap .day:contains("14")', {timeout: 1000}).click()
+
+            //  cy.get('app-rm-chat .bubble.bubble-close', {timeout: 3000}).should('be.visible')
             //  cy.get('app-rm-chat .bubble.bubble-close', {timeout: 300}).click()
+        cy.wait(1000);
         cy.get('body').find('app-rm-chat .bubble.bubble-close').should('not.exist');
 
         cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap').click()

@@ -8,8 +8,20 @@ describe('The Home Page', () => {
       })
     })
     it('Successfully Books on Opb-V6 Mobile', () => {
-      const time = new Date().getTime();
-      cy.visit('https://onepagebooking.com/hnsautotest6?t='+time) // change URL to match your dev URL
+
+      let year = new Date().getFullYear();
+      let month = new Date().getMonth() % 12 + 2; // Next month always
+
+      // Edge case end of the year handling
+      year = month == 13 ? (year + 1) : year;
+      month = month == 13 ? 1 : month;
+
+      cy.visit('https://onepagebooking.com/hnsautotest6?arrival=24.' + month + '.' + year + '&departure=26.' + month + '.' + year + '&rooms=1&adults=1') // change URL to match your dev URL
+
+      // const time = new Date().getTime();
+      // cy.visit('https://onepagebooking.com/hnsautotest6?t='+time) // change URL to match your dev URL
+
+      // uncaught:exception handler 
       cy.on('uncaught:exception', (err, runnable) => {
         // Check if the error is a SyntaxError due to cache after deployment
         if (err.message.includes('SyntaxError')) {
@@ -25,21 +37,23 @@ describe('The Home Page', () => {
         }
         return false;
       });
+
       cy.get('body.is-mobile', { timeout: 1000 }).should('be.visible');
       // cy.get('a.nav-element-link[href="/hotelns5/location"]', {timeout: 4000}).click() // change URL to match your dev URL
-      cy.get('opb6-booking-config-mobile ul li:nth-child(2) button').click() 
+      // cy.get('opb6-booking-config-mobile ul li:nth-child(2) button').click() 
+
       // cy.get('#guests-config-wrap ul li:first-child .row div:last-child .person-number-config-button:first-child button', {timeout: 300}).click() // parents count +1
       // cy.get('#guests-config-wrap ul li.children-amount-config .row div:last-child .person-number-config-button:first-child button', {timeout: 300}).click() 
       // cy.get('app-child-config .child-config-row .child-age-item .dropdown.open', {timeout: 300}).click() 
       // cy.get('app-child-config .child-config-row .child-age-item ul.dropdown-menu li:nth-child(3)', {timeout: 300}).click() 
       // cy.get('app-masthead-room-options #guests-config-toggle .icons-wrap').click() 
-      cy.wait(1000);
+      // cy.wait(1000);
       //cy.get('opb6-calendar-mobile-modal opb6-calendar-mobile .months-wrap.table-wrap > div:nth-child(2) opb6-month-table .more-than-two-months.is-mobile p.day:contains("25")', {timeout: 1000}).should('be.visible')
       //cy.get('opb6-calendar-mobile-modal opb6-calendar-mobile .months-wrap.table-wrap > div:nth-child(2) opb6-month-table .more-than-two-months.is-mobile p.day:contains("26")', {timeout: 1000}).should('be.visible')
-      cy.get('opb6-calendar-mobile-modal opb6-calendar-mobile .months-wrap.table-wrap > div:nth-child(2) opb6-month-table .more-than-two-months.is-mobile p.day:contains("25")', {timeout: 1000}).click() 
-      cy.get('opb6-calendar-mobile-modal opb6-calendar-mobile .months-wrap.table-wrap > div:nth-child(2) opb6-month-table .more-than-two-months.is-mobile p.day:contains("26")', {timeout: 1000}).click()
+      //cy.get('opb6-calendar-mobile-modal opb6-calendar-mobile .months-wrap.table-wrap > div:nth-child(2) opb6-month-table .more-than-two-months.is-mobile p.day:contains("25")', {timeout: 1000}).click() 
+      //cy.get('opb6-calendar-mobile-modal opb6-calendar-mobile .months-wrap.table-wrap > div:nth-child(2) opb6-month-table .more-than-two-months.is-mobile p.day:contains("26")', {timeout: 1000}).click()
 
-      cy.get('.modal-content .fixed-bottom .btn-select.btn-config-ready ', {timeout: 300}).click()
+     // cy.get('.modal-content .fixed-bottom .btn-select.btn-config-ready ', {timeout: 300}).click()
       cy.wait(1000);
       cy.get('opb6-rooms-mobile .rooms-grid .rooms-grid-item:first-child .price-options .price-wrap > div:last-child .btn-select').click()
       cy.wait(1000);

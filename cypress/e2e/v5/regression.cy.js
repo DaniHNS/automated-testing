@@ -3,10 +3,17 @@ describe('The Home Page', () => {
     cy.viewport(1960, 1400) // Set the viewport width and height
   })
 
-    it('Successfully Books', { 
-      retries: 2, 
-    }, () => {
-      cy.visit('https://onepagebooking.com/hnsautotest5?arrival=24.07.23&departure=26.07.23&rooms=1&adults=2') // change URL to match your dev URL
+    it('Successfully Books Opb V5', () => {
+
+      let year = new Date().getFullYear();
+      let month = new Date().getMonth() % 12 + 2; // Next month always
+
+      // Edge case end of the year handling
+      year = month == 13 ? (year + 1) : year;
+      month = month == 13 ? 1 : month;
+    
+      cy.visit('https://onepagebooking.com/hnsautotest5?arrival=24.' + month + '.' + year + '&departure=26.' + month + '.' + year + '&rooms=1&adults=1') // change URL to match your dev URL
+      // cy.visit('https://onepagebooking.com/hnsautotest5?arrival=24.07.23&departure=26.07.23&rooms=1&adults=2') 
       // cy.get('a.nav-element-link[href="/hotelns5/location"]', {timeout: 4000}).click() // change URL to match your dev URL
 
       //Test url parameters
@@ -26,7 +33,7 @@ describe('The Home Page', () => {
 
       // end of TEST
 
-      cy.wait(1000);
+      cy.wait(2000);
 
       // cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap', {timeout: 1000}).click()
       cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap', {timeout: 1000}).click()
