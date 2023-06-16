@@ -1,15 +1,13 @@
 describe('The Home Page', () => {
   beforeEach(() => {
     cy.viewport(1960, 1400) // Set the viewport width and height
-        // Condition the test to run only on Chrome
-        // if (Cypress.isBrowser('chrome')) {
-        //   cy.only('chrome');
-        // }
   })
 
-    it('Successfully Books', () => {
-      cy.visit('https://onepagebooking.com/hnsautotest6?arrival=24.07.23&departure=26.07.23&rooms=1&adults=1') // change URL to match your dev URL
-      // cy.get('a.nav-element-link[href="/hotelns5/location"]', {timeout: 4000}).click() // change URL to match your dev URL
+    it('Successfully Books Opb-V6', () => {
+      const month = new Date().getMonth() % 12 + 1;
+      const year = new Date().getFullYear();
+      cy.visit('https://onepagebooking.com/hnsautotest6?arrival=24.' + month + '.' + year + '&departure=26.' + month + '.' + year + '&rooms=1&adults=1') // change URL to match your dev URL
+
       cy.on('uncaught:exception', (err, runnable) => {
         // Check if the error is a SyntaxError due to cache after deployment
         if (err.message.includes('SyntaxError')) {
@@ -29,13 +27,12 @@ describe('The Home Page', () => {
       //Test url parameter
       // cy.get('opb6-duration .quick-book-section-wrap').click() 
       // cy.wait(1000);
-      // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("22")', {timeout: 1000}).should('be.visible')
-      // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")', {timeout: 1000}).should('be.visible')
-      // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("22")', {timeout: 1000}).click() 
-      // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")', {timeout: 1000}).click()
-
+        // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("22")', {timeout: 1000}).should('be.visible')
+        // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")', {timeout: 1000}).should('be.visible')
+        // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("22")', {timeout: 1000}).click() 
+        // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")', {timeout: 1000}).click()
       // End of Test
-      cy.wait(4000);
+      cy.wait(2000);
       cy.get('opb6-rooms-grid .rooms-grid .rooms-grid-item:first-child .btn-select').trigger('mouseover').click();
       cy.wait(1000);
       cy.get('opb6-room-details .rates .rate-row:first-child opb6-rate-details .btn-select', {timeout: 2000}).should('be.visible') 
@@ -43,14 +40,12 @@ describe('The Home Page', () => {
       cy.wait(1000);
       cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).should('be.visible') //lazy loaded
       cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).type("Daniel")
-      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #lastName', {timeout: 1000}).should('be.visible') //lazy loaded
+      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #lastName', {timeout: 1000}).should('be.visible') 
       cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #lastName', {timeout: 1000}).type("Plotkin")
-      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap input#email', {timeout: 1000}).should('be.visible') //lazy loaded
+      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap input#email', {timeout: 1000}).should('be.visible') 
       cy.get('opb6-order-form form .form-section-wrap .group-main-wrap input#email', {timeout: 1000}).type('testing@hotelnetsolutions.com')
-      // cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).should('be.visible') //lazy loaded
+      // cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).should('be.visible') 
       // cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).type("Daniel")
-
-
 
       // cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#prename').type('Test')
       // cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#name').type('Test') 

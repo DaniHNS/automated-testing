@@ -7,7 +7,7 @@ describe('The Home Page', () => {
           });
       })
     })
-    it('Successfully Books on Mobile', () => {
+    it('Successfully Books on Opb-V6 Mobile', () => {
       const time = new Date().getTime();
       cy.visit('https://onepagebooking.com/hnsautotest6?t='+time) // change URL to match your dev URL
       cy.on('uncaught:exception', (err, runnable) => {
