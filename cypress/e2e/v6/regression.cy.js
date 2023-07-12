@@ -12,7 +12,7 @@ describe('The Home Page', () => {
       year = month == 13 ? (year + 1) : year;
       month = month == 13 ? 1 : month;
 
-      cy.visit('https://onepagebooking.com/hnsautotest 6?arrival=24.' + month + '.' + year + '&departure=26.' + month + '.' + year + '&rooms=1&adults=1') // change URL to match your dev URL
+      cy.visit('https://onepagebooking.com/hnsautotest6?arrival=24.' + month + '.' + year + '&departure=26.' + month + '.' + year + '&rooms=1&adults=1') // change URL to match your dev URL
 
       cy.on('uncaught:exception', (err, runnable) => {
         // Check if the error is a SyntaxError due to cache after deployment
