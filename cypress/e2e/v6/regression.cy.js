@@ -39,7 +39,12 @@ describe('The Home Page', () => {
         // cy.get('opb6-calendar .months-wrap > div:nth-child(2) opb6-month-table .day:contains("24")', {timeout: 1000}).click()
       // End of Test
       cy.wait(2000);
-      cy.get('opb6-rooms-grid .rooms-grid .rooms-grid-item:first-child .btn-select').trigger('mouseover').click();
+        
+      // Cypress cannot continue the command chain sometimes
+      // cy.get('opb6-rooms-grid .rooms-grid .rooms-grid-item:first-child .btn-select').trigger('mouseover').click();
+      cy.get('opb6-rooms-grid .rooms-grid .rooms-grid-item:first-child .btn-select').as('btnSelect');
+      cy.get('@btnSelect').trigger('mouseover').click();
+
       cy.wait(1000);
       cy.get('opb6-room-details .rates .rate-row:first-child opb6-rate-details .btn-select', {timeout: 2000}).should('be.visible') 
       cy.get('opb6-room-details .rates .rate-row:first-child opb6-rate-details .btn-select', {timeout: 2000}).click()
@@ -66,8 +71,13 @@ describe('The Home Page', () => {
       //Final booking action
       // cy.get('#booking-wrap .optin-wrap input[name="cb-red-carpet"] + label[for="cb-acceptAgbs-1"]').click({ force: true })
       cy.scrollTo('bottom')
-      cy.get('#booking-button-wrap .booking-button button', {timeout: 1000}).should('be.visible')
-      cy.get('#booking-button-wrap .booking-button button .booking-button-content-text', {timeout: 1000}).trigger('mouseover').click();
+      cy.get('#booking-button-wrap .booking-button button', {timeout: 1000}).should('be.visible');
+
+      //Cypress cannot continue the command chain sometimes
+      // cy.get('#booking-button-wrap .booking-button button .booking-button-content-text', {timeout: 1000}).trigger('mouseover').click();
+      cy.get('#booking-button-wrap .booking-button button .booking-button-content-text', { timeout: 1000 }).as('bookingButton');
+      cy.get('@bookingButton').trigger('mouseover').click();
+
       cy.wait(4000);
       cy.location('href').should('include', 'https://onepagebooking.com/hnsautotest6/confirmation');
   
