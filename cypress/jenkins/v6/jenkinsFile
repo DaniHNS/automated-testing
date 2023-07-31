@@ -10,6 +10,8 @@ pipeline {
                 sh 'npm -v'
                 // Install project dependencies
                 sh 'npm install'
+                // Set X11 server - common error fix
+                sh 'Xvfb -screen 0 1920x1080x24 :99 & export DISPLAY=:99'
             }
         }  
         stage('Run Tests') {
@@ -22,15 +24,11 @@ pipeline {
     }
     post {
         always {
-            mail to: "plotkin@hotelnetsolutions.de",
-            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-            body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
-        More Info can be found here: ${env.BUILD_URL}
-        Video can be found here: http://jenkins.hns.hotelnetsolutions.de/workspace/BookingE2E-V6/cypress/videos/
-        Trigger the Job: http://jenkins.hns.hotelnetsolutions.de:8081/job/BookingE2E-V6/build?token=Gthr1_8"""
+            // Kill X11 server - common error fix
+            sh 'pkill Xvfb'
         }
         failure {  
-            mail to: "kaske@hotelnetsolutions.de, richter@hotelnetsolutions.de, tehrani@hotelnetsolutions.de",
+            mail to: "kaske@hotelnetsolutions.de, richter@hotelnetsolutions.de, tehrani@hotelnetsolutions.de, plotkin@hotelnetsolutions.de",
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
             body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
         More Info can be found here: ${env.BUILD_URL}
