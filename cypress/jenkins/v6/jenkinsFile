@@ -28,7 +28,8 @@ pipeline {
             sh 'pkill Xvfb'
         }
         failure {  
-            mail to: "kaske@hotelnetsolutions.de, richter@hotelnetsolutions.de, tehrani@hotelnetsolutions.de, plotkin@hotelnetsolutions.de",
+            // mail to: "kaske@hotelnetsolutions.de, richter@hotelnetsolutions.de, tehrani@hotelnetsolutions.de, plotkin@hotelnetsolutions.de",
+            mail to: "plotkin@hotelnetsolutions.de",
             subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
             body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
         More Info can be found here: ${env.BUILD_URL}
