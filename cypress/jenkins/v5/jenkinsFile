@@ -7,14 +7,19 @@ pipeline {
     stages {        
         stage('Build') {
             steps {
-                // Checkout source code from version control (e.g., Git)
-                git url: 'https://github.com/DaniHNS/automated-testing.git'
-                // npm check
-                sh 'npm -v'
-                // Install project dependencies
-                sh 'npm install'
-                // Set X11 server - common error fix
-                sh 'Xvfb -screen 0 1920x1080x24 :99 & export DISPLAY=:99'
+                script {
+                    // Checkout source code from version control (e.g., Git)
+                    git url: 'https://github.com/DaniHNS/automated-testing.git'
+                    // npm check
+                    sh 'npm -v'
+                    // Install project dependencies
+                    sh 'npm install'
+                    // Set X11 server - common error fix
+                    sh 'Xvfb -screen 0 1920x1080x24 :99 & export DISPLAY=:99'
+
+                    // Save the original build result to an environment variable
+                    env.ORIGINAL_BUILD_RESULT = currentBuild.result
+                }
             }
         }  
         stage('Run Tests') {
@@ -28,7 +33,7 @@ pipeline {
     post {
         always {
             script {
-                def originalBuildResult = currentBuild.result
+                def originalBuildResult = env.ORIGINAL_BUILD_RESULT
 
                 if (originalBuildResult == 'FAILURE') {
                     retrySuccess = retryBuild()
