@@ -1,3 +1,6 @@
+def retryCount = 3
+def retrySuccess = false
+
 pipeline {
     agent any
     tools {nodejs "node"}
@@ -24,17 +27,55 @@ pipeline {
     }
     post {
         always {
-            // Kill X11 server - common error fix
-            sh 'pkill Xvfb'
+            script {
+                def originalBuildResult = currentBuild.result
+
+                if (originalBuildResult == 'FAILURE') {
+                    retrySuccess = retryBuild()
+                }
+
+                if (!retrySuccess && currentBuild.result == 'FAILURE') {
+                    sendFailureEmail()
+                }
+            }
         }
-        failure {  
-            // mail to: "kaske@hotelnetsolutions.de, richter@hotelnetsolutions.de, tehrani@hotelnetsolutions.de, plotkin@hotelnetsolutions.de",
-            mail to: "plotkin@hotelnetsolutions.de",
-            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-            body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
-        More Info can be found here: ${env.BUILD_URL}
-        Video can be found here: http://jenkins.hns.hotelnetsolutions.de/workspace/BookingE2E-V5/cypress/videos/
-        Trigger the Job: http://jenkins.hns.hotelnetsolutions.de:8081/job/BookingE2E-V5/build?token=Gthr1_8"""  
-         }
+
+    }
+}
+
+
+def retryBuild() {
+            
+    if (originalBuildResult == 'FAILURE') {
+        for (int i = 1; i <= retryCount; i++) {
+            echo "Job failed (Attempt ${i}/${retryCount}). Retrying in 3 minutes..."
+            sleep time: 3, unit: 'MINUTES'
+            echo 'Retrying...'
+
+            // Kill X11 server - common error fix
+            //sh 'pkill Xvfb'
+            
+            currentBuild.result = null // Reset the build result
+
+            // Run Cypress tests
+            sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
+            if (currentBuild.result != 'FAILURE') {
+                // Build succeeded on retry, so no need to retry anymore
+                return true
+            }
+        }
+        return false
+    }
+}
+
+def sendFailureEmail() {
+    if (currentBuild.result == 'FAILURE') {
+        // mail to: "kaske@hotelnetsolutions.de, richter@hotelnetsolutions.de, tehrani@hotelnetsolutions.de, plotkin@hotelnetsolutions.de",
+        mail to: "plotkin@hotelnetsolutions.de",
+        subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+        body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
+    More Info can be found here: ${env.BUILD_URL}
+    Video can be found here: http://jenkins.hns.hotelnetsolutions.de/workspace/BookingE2E-V5/cypress/videos/
+    Trigger the Job: http://jenkins.hns.hotelnetsolutions.de:8081/job/BookingE2E-V5/build?token=Gthr1_8"""  
     }
 }
