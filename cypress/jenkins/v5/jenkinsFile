@@ -1,3 +1,7 @@
+// Function to run Cypress tests
+def runCypressTests() {
+    sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
+}
 
 pipeline {
     agent any
@@ -28,11 +32,6 @@ pipeline {
         }  
         stage('Run Tests') {
             steps {
-                // Function to run Cypress tests
-                def runCypressTests() {
-                    sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
-                }
-
                 // Run Cypress tests initially
                 runCypressTests()
 
