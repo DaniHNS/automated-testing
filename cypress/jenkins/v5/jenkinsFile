@@ -39,7 +39,7 @@ pipeline {
             steps {
                 // Run Cypress tests initially
                 runCypressTests()
-                echo "Retrying (${retryCount}/${maxRetries})..."
+                echo "Run data (${retryCount}/${maxRetries})..."
                 // Retry if the initial run fails
                 retry(2) {
                     script {
@@ -57,6 +57,11 @@ pipeline {
     }
     post {
         always {
+            // Kill X11 server - common error fix
+            sh 'pkill Xvfb'
+            echo "Always - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."
+        }
+        failure {  
             script {
                 if (currentBuild.currentResult == 'FAILURE' && env.retryOccurred) {
                     mail to: "plotkin@hotelnetsolutions.de",
