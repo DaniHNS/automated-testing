@@ -1,6 +1,9 @@
 pipeline {
     agent any
     tools {nodejs "node"}
+    parameters {
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+    }
     stages {      
         stage('CleanUp') {
             steps {
@@ -12,7 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Checkout source code from version control (e.g., Git)
-                git url: 'https://github.com/DaniHNS/automated-testing.git'
+                git branch: "${params.BRANCH}",  url: 'https://github.com/DaniHNS/automated-testing.git'
                 // npm check
                 sh 'npm -v'
                 // Install project dependencies
