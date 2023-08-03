@@ -33,31 +33,11 @@ pipeline {
         failure {
             retry(1) {
                 timeout(time: 120, unit: 'SECONDS') {
-                    
-                    stage('Build') {
-                        steps {
-                                // Checkout source code from version control (e.g., Git)
-                                git branch: "${params.BRANCH}", url: 'https://github.com/DaniHNS/automated-testing.git'
-                                // npm check
-                                sh 'npm -v'
-                                // Install project dependencies
-                                sh 'npm install'
-                                // Set X11 server - common error fix
-                                sh 'Xvfb -screen 0 1920x1080x24 :99 & export DISPLAY=:99'
-                                
-                            }
-                        }  
-                        stage('Run Tests') {
-                            steps {
-                                // Run Cypress tests
-                                sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
-                            }
-                        }
-
-                            
-                }
+                    sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
+                }               
             }
         }
+    }
         always {
             script {
                 if (currentBuild.currentResult == 'FAILURE') {
