@@ -39,12 +39,12 @@ pipeline {
     post {
         failure {
             script {
-                timeout(time: 120, unit: 'SECONDS') {
-                    retry(1) {
-                      //  sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
-                        retryOccured = true
-                    }               
-                }
+                retry(1) {
+                    //  sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
+                    sleep(time: 120, unit: 'SECONDS')
+                    retryOccured = true
+                }               
+                
             }
         }
         always {
