@@ -2,6 +2,11 @@
 def runCypressTests() {
     sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
 }
+def maxRetries = 2
+def retryCount = 0
+def retryInterval = 120 // seconds
+env.retryOccurred = false
+
 
 pipeline {
     agent any
@@ -36,18 +41,15 @@ pipeline {
                 runCypressTests()
 
                 // Retry if the initial run fails
-                script {
-                    def maxRetries = 1
-                    def retryCount = 0
-                    def retryInterval = 120 // seconds
-                    env.retryOccurred = false
-
-                    while (currentBuild.currentResult == 'FAILURE' && retryCount < maxRetries) {
-                        retryCount++
-                        echo "Retrying (${retryCount}/${maxRetries})..."
-                        sleep(time: retryInterval, unit: 'SECONDS')
-                        runCypressTests()
-                        env.retryOccurred = true
+                retry(2) {
+                    script {
+                        if (currentBuild.currentResult == 'FAILURE' && retryCount < maxRetries) {
+                            retryCount++
+                            echo "Retrying (${retryCount}/${maxRetries})..."
+                            sleep(time: retryInterval, unit: 'SECONDS')
+                            runCypressTests()
+                            env.retryOccurred = true
+                        }
                     }
                 }
             }
