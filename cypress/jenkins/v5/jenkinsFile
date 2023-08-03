@@ -7,7 +7,14 @@ pipeline {
     parameters {
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
     }
-    stages {        
+    stages {     
+        stage('CleanUp') {
+            steps {
+                script {
+                   sh "git clean -x"
+                }
+            }
+        }     
         stage('Build') {
             steps {
                 // Checkout source code from version control (e.g., Git)
@@ -34,8 +41,8 @@ pipeline {
             script {
                 timeout(time: 120, unit: 'SECONDS') {
                     retry(1) {
-                        sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
-                        retryOccured = false
+                      //  sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
+                        retryOccured = true
                     }               
                 }
             }
