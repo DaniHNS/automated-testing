@@ -11,7 +11,7 @@ pipeline {
         stage('CleanUp') {
             steps {
                 script {
-                   sh "git clean -x"
+                   sh "git clean -x -f"
                 }
             }
         }     
