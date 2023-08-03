@@ -39,13 +39,13 @@ pipeline {
             steps {
                 // Run Cypress tests initially
                 runCypressTests()
-
+                echo "Retrying (${retryCount}/${maxRetries})..."
                 // Retry if the initial run fails
                 retry(2) {
                     script {
                         if (currentBuild.currentResult == 'FAILURE' && retryCount < maxRetries) {
                             retryCount++
-                            echo "Retrying (${retryCount}/${maxRetries})..."
+                            // echo "Retrying (${retryCount}/${maxRetries})..."
                             sleep(time: retryInterval, unit: 'SECONDS')
                             runCypressTests()
                             env.retryOccurred = true
@@ -63,7 +63,7 @@ pipeline {
                     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
                     body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
                         More Info can be found here: ${env.BUILD_URL}
-                        Video can be found here: http://jenkins.hns.hotelnetsolutions.de/workspace/BookingE2E-V6/cypress/videos/
+                        Video can be found here: http://jenkins.hns.hotelnetsolutions.de/workspace/BookingE2E-V5/cypress/videos/
                         Trigger the Job: http://jenkins.hns.hotelnetsolutions.de:8081/job/BookingE2E-V6/build?token=Gthr1_8"""
                 }
             }
