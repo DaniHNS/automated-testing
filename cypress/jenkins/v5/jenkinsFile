@@ -1,5 +1,3 @@
-def retryCount = 3
-def retryOccured = false
 
 pipeline {
     agent any
@@ -30,26 +28,36 @@ pipeline {
         }  
         stage('Run Tests') {
             steps {
-                // Run Cypress tests
-                sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
+                // Function to run Cypress tests
+                def runCypressTests() {
+                    sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
+                }
+
+                // Run Cypress tests initially
+                runCypressTests()
+
+                // Retry if the initial run fails
+                script {
+                    def maxRetries = 1
+                    def retryCount = 0
+                    def retryInterval = 120 // seconds
+                    env.retryOccurred = false
+
+                    while (currentBuild.currentResult == 'FAILURE' && retryCount < maxRetries) {
+                        retryCount++
+                        echo "Retrying (${retryCount}/${maxRetries})..."
+                        sleep(time: retryInterval, unit: 'SECONDS')
+                        runCypressTests()
+                        env.retryOccurred = true
+                    }
+                }
             }
         }
-          
     }
     post {
-        failure {
-            script {
-                retry(1) {
-                    //  sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
-                    sleep(time: 120, unit: 'SECONDS')
-                    retryOccured = true
-                }               
-                
-            }
-        }
         always {
             script {
-                if (currentBuild.currentResult == 'FAILURE' && retryOccured == true) {
+                if (currentBuild.currentResult == 'FAILURE' && env.retryOccurred) {
                     mail to: "plotkin@hotelnetsolutions.de",
                     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
                     body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
