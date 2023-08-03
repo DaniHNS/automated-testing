@@ -4,12 +4,15 @@ def retrySuccess = false
 pipeline {
     agent any
     tools {nodejs "node"}
+    parameters {
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+    }
     stages {        
         stage('Build') {
             steps {
                 script {
                     // Checkout source code from version control (e.g., Git)
-                    git url: 'https://github.com/DaniHNS/automated-testing.git'
+                    git branch: "${params.BRANCH}", url: 'https://github.com/DaniHNS/automated-testing.git'
                     // npm check
                     sh 'npm -v'
                     // Install project dependencies
@@ -19,6 +22,7 @@ pipeline {
 
                     // Save the original build result to an environment variable
                     env.ORIGINAL_BUILD_RESULT = currentBuild.result
+                    echo env.ORIGINAL_BUILD_RESULT
                 }
             }
         }  
