@@ -59,9 +59,10 @@ pipeline {
         always {
             // Kill X11 server - common error fix
             sh 'pkill Xvfb'
-            echo "Always - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."
+            
         }
-        failure {  
+        failure {
+            echo "Always - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
             script {
                 if (currentBuild.currentResult == 'FAILURE' && env.retryOccurred) {
                     mail to: "plotkin@hotelnetsolutions.de",
