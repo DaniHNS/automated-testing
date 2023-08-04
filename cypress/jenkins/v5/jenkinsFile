@@ -41,7 +41,7 @@ pipeline {
                     while (maxRetries >= retryCount) {
                         try {
                             runCypressTests()
-                            break // If the build succeeds, break the loop
+                            // break // If the build succeeds, break the loop
                         } catch (Exception e) {
                             retryCount++
                             echo "Retrying (${retryCount}/${maxRetries})..."
