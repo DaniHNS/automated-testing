@@ -37,21 +37,23 @@ pipeline {
         }  
         stage('Run Tests') {
             steps {
-                // Run Cypress tests initially
-                runCypressTests()
-                sh 'echo "Run info (${retryCount}/${maxRetries})..."'
-                // Retry if the initial run fails
-                //retry(2) {
-                    script {
-                        if (currentBuild.currentResult == 'FAILURE' && retryCount < maxRetries) {
-                            retryCount++
-                            // echo "Retrying (${retryCount}/${maxRetries})..."
-                            sleep(time: retryInterval, unit: 'SECONDS')
-                            runCypressTests()
-                            env.retryOccurred = true
-                        }
-                    }
-               // }
+                script {
+                    // Run Cypress tests initially
+                    runCypressTests()
+                    sh 'echo "Run info (${retryCount}/${maxRetries})..."'
+                    // Retry if the initial run fails
+                    //retry(2) {
+                    
+                            if (currentBuild.currentResult == 'FAILURE' && retryCount < maxRetries) {
+                                retryCount++
+                                // echo "Retrying (${retryCount}/${maxRetries})..."
+                                sleep(time: retryInterval, unit: 'SECONDS')
+                                runCypressTests()
+                                env.retryOccurred = true
+                            }
+                        
+                    // }
+                }
             }
         }
     }
