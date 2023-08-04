@@ -39,7 +39,7 @@ pipeline {
             steps {
                 // Run Cypress tests initially
                 runCypressTests()
-                echo "Run info (${retryCount}/${maxRetries})..."
+                sh 'echo "Run info (${retryCount}/${maxRetries})..."'
                 // Retry if the initial run fails
                 //retry(2) {
                     script {
