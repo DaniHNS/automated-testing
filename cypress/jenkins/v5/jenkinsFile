@@ -45,7 +45,7 @@ pipeline {
                         } catch (Exception e) {
                             retryCount++
                             echo "Retrying (${retryCount}/${maxRetries})..."
-                            env.retryOccurred = 'true'
+                            //env.retryOccurred = 'true'
                             echo "retryOccurred (${env.retryOccurred})..."
                             sleep(time: retryInterval, unit: 'SECONDS')
                             runCypressTests()
