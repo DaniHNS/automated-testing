@@ -41,14 +41,14 @@ pipeline {
                     retry(maxRetries) {
                         try {
                             runCypressTests()
-                            break // If the build succeeds, break the loop
+                           // break // If the build succeeds, break the loop
                         } catch (Exception e) {
                             retryCount++
                             echo "Retrying (${retryCount}/${maxRetries})..."
                             //env.retryOccurred = 'true'
                             echo "retryOccurred (${env.retryOccurred})..."
                             sleep(time: retryInterval, unit: 'SECONDS')
-                            runCypressTests()
+                           // runCypressTests()
                         }
                     }
                 }
