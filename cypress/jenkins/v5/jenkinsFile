@@ -39,9 +39,9 @@ pipeline {
             steps {
                 // Run Cypress tests initially
                 runCypressTests()
-                echo "Run data (${retryCount}/${maxRetries})..."
+                echo "Run info (${retryCount}/${maxRetries})..."
                 // Retry if the initial run fails
-                retry(2) {
+                //retry(2) {
                     script {
                         if (currentBuild.currentResult == 'FAILURE' && retryCount < maxRetries) {
                             retryCount++
@@ -51,7 +51,7 @@ pipeline {
                             env.retryOccurred = true
                         }
                     }
-                }
+               // }
             }
         }
     }
