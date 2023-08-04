@@ -65,6 +65,8 @@ pipeline {
             script {
                 echo "Always - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
                 if (currentBuild.currentResult == 'FAILURE' && env.retryOccurred) {
+                    echo "Always - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
+
                     mail to: "plotkin@hotelnetsolutions.de",
                     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
                     body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
