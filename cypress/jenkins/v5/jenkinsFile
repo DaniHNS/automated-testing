@@ -38,7 +38,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    while (retryCount <= maxRetries) {
+                    while (maxRetries >= retryCount) {
                         try {
                             runCypressTests()
                             break // If the build succeeds, break the loop
@@ -63,7 +63,7 @@ pipeline {
         }
         failure {
             script {
-                echo "Always2 - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
+                echo "Always - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
                 if (currentBuild.currentResult == 'FAILURE' && env.retryOccurred) {
                     mail to: "plotkin@hotelnetsolutions.de",
                     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
