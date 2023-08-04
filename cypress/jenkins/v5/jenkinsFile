@@ -38,19 +38,17 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    retry(maxRetries) {
-                        try {
-                            runCypressTests()
-                           // break // If the build succeeds, break the loop
-                        } catch (Exception e) {
-                            retryCount++
-                            echo "Retrying (${retryCount}/${maxRetries})..."
-                            //env.retryOccurred = 'true'
-                            echo "retryOccurred (${env.retryOccurred})..."
-                            sleep(time: retryInterval, unit: 'SECONDS')
-                           // runCypressTests()
-                        }
+                    try {
+                        runCypressTests()
+                    } catch (Exception e) {
+                        retryCount++
+                        echo "Retrying (${retryCount}/${maxRetries})..."
+                        env.retryOccurred = 'true'
+                        echo "retryOccurred (${env.retryOccurred})..."
+                        sleep(time: retryInterval, unit: 'SECONDS')
+                        runCypressTests()
                     }
+                    
                 }
             }
         }
@@ -65,7 +63,7 @@ pipeline {
             script {
                 echo "Always - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
                 if (currentBuild.currentResult == 'FAILURE' && env.retryOccurred == 'true') {
-                    echo "Always - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
+                    echo "Mail - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
 
                     mail to: "plotkin@hotelnetsolutions.de",
                     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
