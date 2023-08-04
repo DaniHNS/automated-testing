@@ -38,7 +38,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    while (maxRetries >= retryCount) {
+                    retry(maxRetries) {
                         try {
                             runCypressTests()
                             break // If the build succeeds, break the loop
