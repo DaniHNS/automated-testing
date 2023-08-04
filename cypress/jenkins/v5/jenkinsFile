@@ -14,18 +14,19 @@ pipeline {
     parameters {
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
     }
-    stages {     
+
+    stages {      
         stage('CleanUp') {
             steps {
                 script {
                    sh "git clean -x -f"
                 }
             }
-        }     
+        }  
         stage('Build') {
             steps {
                 // Checkout source code from version control (e.g., Git)
-                git branch: "${params.BRANCH}", url: 'https://github.com/DaniHNS/automated-testing.git'
+                git branch: "${params.BRANCH}",  url: 'https://github.com/DaniHNS/automated-testing.git'
                 // npm check
                 sh 'npm -v'
                 // Install project dependencies
