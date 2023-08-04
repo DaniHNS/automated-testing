@@ -61,9 +61,11 @@ pipeline {
                         } catch (Exception e) {
                             retryCount++
                             echo "Retrying (${retryCount}/${maxRetries})..."
+                            env.retryOccurred = true
+                            echo "retryOccurred (${env.retryOccurred})..."
                             sleep(time: retryInterval, unit: 'SECONDS')
                             runCypressTests()
-                            env.retryOccurred = true
+                            
                         }
                     }
                 }
@@ -79,6 +81,7 @@ pipeline {
         failure {
             echo "Always - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
             script {
+                 echo "Always2 - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
                 if (currentBuild.currentResult == 'FAILURE' && env.retryOccurred) {
                     mail to: "plotkin@hotelnetsolutions.de",
                     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
