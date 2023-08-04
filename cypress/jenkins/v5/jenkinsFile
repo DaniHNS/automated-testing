@@ -64,7 +64,7 @@ pipeline {
         failure {
             script {
                 echo "Always - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
-                if (currentBuild.currentResult == 'FAILURE' && env.retryOccurred == true) {
+                if (currentBuild.currentResult == 'FAILURE' && env.retryOccurred === true) {
                     echo "Always - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
 
                     mail to: "plotkin@hotelnetsolutions.de",
