@@ -40,6 +40,7 @@ pipeline {
                 script {
                     try {
                         runCypressTests()
+                        // If try fails catch block will trigger the test once again after delay
                     } catch (Exception e) {
                         retryCount++
                         echo "Retrying (${retryCount}/${maxRetries})..."
@@ -62,8 +63,9 @@ pipeline {
         failure {
             script {
                 echo "Always - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
+                // Mail conditioned on Failure on both attempts
                 if (currentBuild.currentResult == 'FAILURE' && env.retryOccurred == 'true') {
-                    echo "Mail - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
+                    echo "Mail sending block - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
 
                     mail to: "plotkin@hotelnetsolutions.de",
                     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
