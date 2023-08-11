@@ -57,8 +57,14 @@ pipeline {
     }
     post {
         always {
-            // Kill X11 server - common error fix
-            sh 'pkill Xvfb'
+                try {
+                        // Kill X11 server - common error fix
+                        sh 'pkill Xvfb'
+                    } catch (Exception e) {
+                        echo "Post Always excecution error: - (${e})!"
+                    }
+                    
+                }
             
         }
         failure {
