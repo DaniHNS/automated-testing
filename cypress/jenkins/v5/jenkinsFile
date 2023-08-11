@@ -57,7 +57,7 @@ pipeline {
     }
     post {
         always {
-                try {
+                    try {
                         // Kill X11 server - common error fix
                         sh 'pkill Xvfb'
                     } catch (Exception e) {
@@ -84,5 +84,3 @@ pipeline {
             }
         }
     }
-
-}
