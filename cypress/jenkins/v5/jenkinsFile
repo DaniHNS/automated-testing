@@ -18,7 +18,9 @@ pipeline {
         stage('CleanUp') {
             steps {
                 script {
-                   sh "git clean -x -f"
+                    sh "git clean -x -f"
+                    // npm clear cache
+                    sh 'npm cache clean --force'
                 }
             }
         }  
@@ -26,8 +28,7 @@ pipeline {
             steps {
                 // Checkout source code from version control (e.g., Git)
                 git branch: "${params.BRANCH}",  url: 'https://github.com/DaniHNS/automated-testing.git'
-                // npm clear cache
-                sh 'npm cache clean --force'
+                
                 // npm check
                 sh 'npm -v'
                 // Install project dependencies
