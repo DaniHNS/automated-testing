@@ -66,9 +66,20 @@ pipeline {
                     try {
                         // Kill X11 server - common error fix
                         sh 'pkill Xvfb'
+
+                        // GET
+                        def get = new URL("https://httpbin.org/get").openConnection();
+                        def getRC = get.getResponseCode();
+                        println(getRC);
+                        echo "test http: - (${getRC})"
+                        if(getRC.equals(200)) {
+                            println(get.getInputStream().getText());
+                        }
                     } catch (Exception e) {
                         echo "Post Always excecution error: - (${e})!"
                     }
+
+
             }
         }
         failure {
