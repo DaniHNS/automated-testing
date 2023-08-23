@@ -11,9 +11,9 @@ env.retryOccurred = 'false'
 
 pipeline {
     agent any
-    // environment {
-    //     Twilio_credentials = credentials('twilio')
-    // }
+    environment {
+        TWILIO = credentials('Twilio')
+    }
     tools {nodejs "node"}
     parameters {
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
@@ -68,19 +68,19 @@ pipeline {
         always {
             script {
                     try {
-                                            // Use the credentials in your script
-                                            withCredentials([usernamePassword(credentialsId: 'Twilio', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                                                // Inside this block, you can access $USERNAME and $PASSWORD
-                                                sh "echo Username: \$USERNAME"
-                                                sh "echo Password: \$PASSWORD"
-                                            }
+                        // Use the credentials in your script
+                        withCredentials([usernamePassword(credentialsId: 'Twilio', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            // Inside this block, you can access $USERNAME and $PASSWORD
+                            sh "echo Username: \$USERNAME"
+                            sh "echo Password: \$PASSWORD"
+                        }
                         // Kill X11 server - common error fix
                         sh 'pkill Xvfb'
 
                         echo 'debugEnvironment variables'
-                        echo 'Both: ' + $Twilio_credentials
-                        echo 'SID: ' + $Twilio_credentials_USR
-                        echo 'AUTH_TOKEN' + $Twilio_credentials_PSW
+                        echo 'Both: ' + $TWILIO
+                        echo 'SID: ' + $TWILIO_USR
+                        echo 'AUTH_TOKEN' + $TWILIO_PSW
 
                         // GET
                         // def get = new URL("https://api.twilio.com/2010-04-01/Accounts/AC4e8cda28ac14de11c81b648d58f5c5e4/Messages.json").openConnection();
