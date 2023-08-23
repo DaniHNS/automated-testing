@@ -90,7 +90,7 @@ pipeline {
                         // Set up HTTP headers for authentication
                         // String authString = "${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}"
                         String authString = "ACdc2fbf07b600ebc3664cbaa69c68825c:93da8f8bc084645dffb41f0be3e0c604"
-                        String encodedAuth = "Basic " + authString.bytes.encodeBase64().toString()
+                        String encodedAuth = "Basic " + authString //.bytes.encodeBase64().toString()
                         post.setRequestProperty("Authorization", encodedAuth)
 
                         post.setRequestMethod("POST")
