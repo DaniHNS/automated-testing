@@ -78,9 +78,9 @@ pipeline {
                         sh 'pkill Xvfb'
 
                         echo 'debugEnvironment variables'
-                        echo 'Both: ' + ${TWILIO}
-                        echo 'SID: ' + ${TWILIO_USR}
-                        echo 'AUTH_TOKEN' + ${TWILIO_PSW}
+                        echo 'Both: $TWILIO'
+                        echo 'SID: $TWILIO_USR'
+                        echo 'AUTH_TOKEN: TWILIO_PSW'
 
                         // GET
                         // def get = new URL("https://api.twilio.com/2010-04-01/Accounts/AC4e8cda28ac14de11c81b648d58f5c5e4/Messages.json").openConnection();
