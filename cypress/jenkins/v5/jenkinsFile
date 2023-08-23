@@ -6,9 +6,9 @@ def runCypressTests() {
 
 def sendSMS() {
 
-    int[] array = ["+4916091961830", "+4915231671270"];
+    array = ["+4916091961830", "+4915231671270"];
 
-    for(int phone_number in array) { 
+    for(phone_number in array) { 
         println(phone_number); 
    
         // POST
