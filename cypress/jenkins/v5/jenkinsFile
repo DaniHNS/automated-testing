@@ -12,8 +12,7 @@ env.retryOccurred = 'false'
 pipeline {
     agent any
     environment {
-        AUTH_TOKEN = credentials('Twilio_Username')
-        SID = credentials('Twilio_Password')
+        Twilio_credentials = credentials('Twilio')
     }
     tools {nodejs "node"}
     parameters {
@@ -79,9 +78,9 @@ pipeline {
                         sh 'pkill Xvfb'
 
                         echo 'debugEnvironment variables'
-
-                        echo 'SID: ' + ${SID}
-                        echo 'AUTH_TOKEN' + ${AUTH_TOKEN}
+                        echo 'Both: ' + $Twilio_credentials
+                        echo 'SID: ' + $Twilio_credentials_USR
+                        echo 'AUTH_TOKEN' + $Twilio_credentials_PSW
 
                         // GET
                         // def get = new URL("https://api.twilio.com/2010-04-01/Accounts/AC4e8cda28ac14de11c81b648d58f5c5e4/Messages.json").openConnection();
