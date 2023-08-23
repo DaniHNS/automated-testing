@@ -11,6 +11,10 @@ env.retryOccurred = 'false'
 
 pipeline {
     agent any
+    environment {
+        AUTH_TOKEN = credentials('Twilio_USERNAME')
+        SID = credentials('Twilio_PASSWORD')
+    }
     tools {nodejs "node"}
     parameters {
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
@@ -65,8 +69,19 @@ pipeline {
         always {
             script {
                     try {
+                                            // Use the credentials in your script
+                                            withCredentials([usernamePassword(credentialsId: 'Twilio', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                                                // Inside this block, you can access $USERNAME and $PASSWORD
+                                                sh "echo Username: \$USERNAME"
+                                                sh "echo Password: \$PASSWORD"
+                                            }
                         // Kill X11 server - common error fix
                         sh 'pkill Xvfb'
+
+                        echo 'debugEnvironment variables'
+
+                        echo 'SID: ' + ${SID}
+                        echo 'AUTH_TOKEN' + ${AUTH_TOKEN}
 
                         // GET
                         // def get = new URL("https://api.twilio.com/2010-04-01/Accounts/AC4e8cda28ac14de11c81b648d58f5c5e4/Messages.json").openConnection();
@@ -83,11 +98,9 @@ pipeline {
 
                         // POST
                         def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
-                        // def message = '{From:"+15392081457", Body:"this is a HNS TEST message", To:"+4916091961830"}'
 
+                        // Payload structure because content-type x-www-form-urlencoded
                         String urlParameters  = "From=+15392081457&To=+4916091961830&Body=this is a HNS TEST message";
-                        // post.setRequestProperty("TWILIO_ACCOUNT_SID","ACdc2fbf07b600ebc3664cbaa69c68825c")
-                        // post.setRequestProperty("TWILIO_AUTH_TOKEN","93da8f8bc084645dffb41f0be3e0c604")
 
                         // Set up HTTP headers for authentication
                         String authString = "ACdc2fbf07b600ebc3664cbaa69c68825c:9799464121df1f0600630a9199402d07"
@@ -99,13 +112,9 @@ pipeline {
                         String authHeaderValue = "Basic " + new String(encodedAuth);
                         echo "authHeaderValue"
                         println(authHeaderValue)
-
-                        // String encodedAuth = "Basic " + authString.bytes.encodeBase64().toString()
                         post.setRequestProperty("Authorization", authHeaderValue)
-
                         post.setRequestMethod("POST")
                         post.setDoOutput(true)
-                        // post.setRequestProperty("Content-Type", "application/json")
                         post.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
                         post.getOutputStream().write(urlParameters.getBytes("UTF-8"));
                         def postRC = post.getResponseCode();
@@ -115,8 +124,6 @@ pipeline {
                         } else {
                             println(post.getErrorStream().getText());
                         }
-
-
                     } catch (Exception e) {
                         echo "Post Always excecution error: - (${e})!"
                     }
