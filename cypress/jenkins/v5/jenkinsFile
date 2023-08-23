@@ -12,8 +12,8 @@ env.retryOccurred = 'false'
 pipeline {
     agent any
     environment {
-        AUTH_TOKEN = credentials('Twilio_USERNAME')
-        SID = credentials('Twilio_PASSWORD')
+        AUTH_TOKEN = credentials('Twilio_Username')
+        SID = credentials('Twilio_Password')
     }
     tools {nodejs "node"}
     parameters {
