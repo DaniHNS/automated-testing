@@ -83,7 +83,9 @@ pipeline {
 
                         // POST
                         def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
-                        def message = '{From:"+15392081457", Body:"this is a HNS TEST message", To:"+4916091961830"}'
+                        // def message = '{From:"+15392081457", Body:"this is a HNS TEST message", To:"+4916091961830"}'
+
+                        String urlParameters  = "From=+15392081457&To=+4916091961830&Body=this is a HNS TEST message";
                         // post.setRequestProperty("TWILIO_ACCOUNT_SID","ACdc2fbf07b600ebc3664cbaa69c68825c")
                         // post.setRequestProperty("TWILIO_AUTH_TOKEN","93da8f8bc084645dffb41f0be3e0c604")
 
@@ -105,7 +107,7 @@ pipeline {
                         post.setDoOutput(true)
                         // post.setRequestProperty("Content-Type", "application/json")
                         post.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
-                        post.getOutputStream().write(message.getBytes("UTF-8"));
+                        post.getOutputStream().write(urlParameters.getBytes("UTF-8"));
                         def postRC = post.getResponseCode();
                         println(postRC);
                         if(postRC.equals(200)) {
