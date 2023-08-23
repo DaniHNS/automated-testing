@@ -1,3 +1,4 @@
+import static groovyx.net.http.HttpBuilder.configure
 // Function to run Cypress tests
 def runCypressTests() {
     sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
@@ -68,13 +69,35 @@ pipeline {
                         sh 'pkill Xvfb'
 
                         // GET
-                        def get = new URL("https://httpbin.org/get").openConnection();
-                        def getRC = get.getResponseCode();
-                        println(getRC);
-                        echo "test http: - (${getRC})"
-                        if(getRC.equals(200)) {
-                            println(get.getInputStream().getText());
+                        // def get = new URL("https://api.twilio.com/2010-04-01/Accounts/AC4e8cda28ac14de11c81b648d58f5c5e4/Messages.json").openConnection();
+                        // def getRC = get.getResponseCode();
+                        // println(getRC);
+                        // echo "test http: - (${getRC})"
+                        // if(getRC.equals(200)) {
+                        //     println(get.getInputStream().getText());
+                        // }
+
+                        // def result = HttpBuilder.configure {
+                        //     request.raw = "https://api.twilio.com/2010-04-01/Accounts/AC4e8cda28ac14de11c81b648d58f5c5e4/Messages.json"
+                        // }.get()
+
+                        // POST
+                        def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
+                        def message = '{from:"+15392081457", message:"this is a HNS TEST message", to:"+4916091961830"}'
+                        post.setRequestHeader("TWILIO_ACCOUNT_SID","ACdc2fbf07b600ebc3664cbaa69c68825c")
+                        post.setRequestHeader("TWILIO_AUTH_TOKEN","93da8f8bc084645dffb41f0be3e0c604")
+                        post.setRequestMethod("POST")
+                        post.setDoOutput(true)
+                        // post.setRequestProperty("Content-Type", "application/json")
+                        post.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
+                        post.getOutputStream().write(message.getBytes("UTF-8"));
+                        def postRC = post.getResponseCode();
+                        println(postRC);
+                        if(postRC.equals(200)) {
+                            println(post.getInputStream().getText());
                         }
+
+
                     } catch (Exception e) {
                         echo "Post Always excecution error: - (${e})!"
                     }
