@@ -83,7 +83,7 @@ pipeline {
 
                         // POST
                         def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
-                        def message = '{from:"+15392081457", message:"this is a HNS TEST message", to:"+4916091961830"}'
+                        def message = '{From:"+15392081457", Body:"this is a HNS TEST message", To:"+4916091961830"}'
                         // post.setRequestProperty("TWILIO_ACCOUNT_SID","ACdc2fbf07b600ebc3664cbaa69c68825c")
                         // post.setRequestProperty("TWILIO_AUTH_TOKEN","93da8f8bc084645dffb41f0be3e0c604")
 
