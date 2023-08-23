@@ -102,7 +102,8 @@ pipeline {
                         String urlParameters  = "From=+15392081457&To=+4916091961830&Body=this is a HNS TEST message";
 
                         // Set up HTTP headers for authentication
-                        String authString = "ACdc2fbf07b600ebc3664cbaa69c68825c:9799464121df1f0600630a9199402d07"
+                        // String authString = "ACdc2fbf07b600ebc3664cbaa69c68825c:9799464121df1f0600630a9199402d07"
+                        String authString = "$TWILIO"
                         echo "authString"
                         println(authString)
                         byte[] encodedAuth = org.apache.commons.codec.binary.Base64.encodeBase64(authString.getBytes("UTF-8"));
