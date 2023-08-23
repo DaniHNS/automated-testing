@@ -11,9 +11,9 @@ env.retryOccurred = 'false'
 
 pipeline {
     agent any
-    environment {
-        Twilio_credentials = credentials('twilio')
-    }
+    // environment {
+    //     Twilio_credentials = credentials('twilio')
+    // }
     tools {nodejs "node"}
     parameters {
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
