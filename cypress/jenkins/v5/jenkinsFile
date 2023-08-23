@@ -84,13 +84,22 @@ pipeline {
                         // POST
                         def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
                         def message = '{from:"+15392081457", message:"this is a HNS TEST message", to:"+4916091961830"}'
-                        post.setRequestProperty("TWILIO_ACCOUNT_SID","ACdc2fbf07b600ebc3664cbaa69c68825c")
-                        post.setRequestProperty("TWILIO_AUTH_TOKEN","93da8f8bc084645dffb41f0be3e0c604")
+                        // post.setRequestProperty("TWILIO_ACCOUNT_SID","ACdc2fbf07b600ebc3664cbaa69c68825c")
+                        // post.setRequestProperty("TWILIO_AUTH_TOKEN","93da8f8bc084645dffb41f0be3e0c604")
 
                         // Set up HTTP headers for authentication
-                        // String authString = "ACdc2fbf07b600ebc3664cbaa69c68825c:93da8f8bc084645dffb41f0be3e0c604"
-                        // String encodedAuth = "Basic " + authString //.bytes.encodeBase64().toString()
-                        // post.setRequestProperty("Authorization", encodedAuth)
+                        String authString = "ACdc2fbf07b600ebc3664cbaa69c68825c:93da8f8bc084645dffb41f0be3e0c604"
+                        echo "authString"
+                        println(authString)
+                        byte[] encodedAuth = Base64.encodeBase64(authString.getBytes(StandardCharsets.UTF_8));
+                        echo "encodedAuth"
+                        println(encodedAuth)
+                        String authHeaderValue = "Basic " + new String(encodedAuth);
+                        echo "authHeaderValue"
+                        println(authHeaderValue)
+
+                        // String encodedAuth = "Basic " + authString.bytes.encodeBase64().toString()
+                        post.setRequestProperty("Authorization", authHeaderValue)
 
                         post.setRequestMethod("POST")
                         post.setDoOutput(true)
