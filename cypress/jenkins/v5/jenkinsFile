@@ -91,7 +91,7 @@ pipeline {
                         String authString = "ACdc2fbf07b600ebc3664cbaa69c68825c:93da8f8bc084645dffb41f0be3e0c604"
                         echo "authString"
                         println(authString)
-                        byte[] encodedAuth = Base64.encodeBase64(authString.getBytes(StandardCharsets.UTF_8));
+                        byte[] encodedAuth = Base64.encodeBase64(authString.getBytes("UTF-8"));
                         echo "encodedAuth"
                         println(encodedAuth)
                         String authHeaderValue = "Basic " + new String(encodedAuth);
