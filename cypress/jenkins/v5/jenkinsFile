@@ -5,28 +5,33 @@ def runCypressTests() {
 }
 
 def sendSMS() {
+
+    int[] array = ["+4916091961830", "+4915231671270"];
+
+    for(int phone_number in array) { 
+        println(phone_number); 
+   
         // POST
-    def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
+        def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
 
-    // Payload structure because content-type x-www-form-urlencoded
-    String urlParameters  = "From=+15392081457&To=+4916091961830&Body=this is a HNS TEST message";
+        // Payload structure because content-type x-www-form-urlencoded
+        String urlParameters  = "From=+15392081457&To=" + "${phone_number}" + "&Body=this is a HNS TEST message";
 
-    // Set up HTTP headers for authentication
-    String authString = "$TWILIO"
-    echo "authString"
-    println(authString)
-    byte[] encodedAuth = org.apache.commons.codec.binary.Base64.encodeBase64(authString.getBytes("UTF-8"));
-    String authHeaderValue = "Basic " + new String(encodedAuth);
-    post.setRequestProperty("Authorization", authHeaderValue)
-    post.setRequestMethod("POST")
-    post.setDoOutput(true)
-    post.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
-    post.getOutputStream().write(urlParameters.getBytes("UTF-8"));
-    def postRC = post.getResponseCode();
-    println(postRC);
-    if(postRC.equals(200)) {
-        println(post.getInputStream().getText());
-    }  
+        // Set up HTTP headers for authentication
+        String authString = "$TWILIO"
+        byte[] encodedAuth = org.apache.commons.codec.binary.Base64.encodeBase64(authString.getBytes("UTF-8"));
+        String authHeaderValue = "Basic " + new String(encodedAuth);
+        post.setRequestProperty("Authorization", authHeaderValue)
+        post.setRequestMethod("POST")
+        post.setDoOutput(true)
+        post.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
+        post.getOutputStream().write(urlParameters.getBytes("UTF-8"));
+        def postRC = post.getResponseCode();
+        println(postRC);
+        if(postRC.equals(200)) {
+            println(post.getInputStream().getText());
+        }  
+    }
 }
 def maxRetries = 2
 def retryCount = 0
