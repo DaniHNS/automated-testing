@@ -3,6 +3,31 @@
 def runCypressTests() {
     sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
 }
+
+def sendSMS() {
+        // POST
+    def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
+
+    // Payload structure because content-type x-www-form-urlencoded
+    String urlParameters  = "From=+15392081457&To=+4916091961830&Body=this is a HNS TEST message";
+
+    // Set up HTTP headers for authentication
+    String authString = "$TWILIO"
+    echo "authString"
+    println(authString)
+    byte[] encodedAuth = org.apache.commons.codec.binary.Base64.encodeBase64(authString.getBytes("UTF-8"));
+    String authHeaderValue = "Basic " + new String(encodedAuth);
+    post.setRequestProperty("Authorization", authHeaderValue)
+    post.setRequestMethod("POST")
+    post.setDoOutput(true)
+    post.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
+    post.getOutputStream().write(urlParameters.getBytes("UTF-8"));
+    def postRC = post.getResponseCode();
+    println(postRC);
+    if(postRC.equals(200)) {
+        println(post.getInputStream().getText());
+    }  
+}
 def maxRetries = 2
 def retryCount = 0
 def retryInterval = 20 // seconds
@@ -69,61 +94,17 @@ pipeline {
             script {
                     try {
                         // Use the credentials in your script
-                        withCredentials([usernamePassword(credentialsId: 'Twilio', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                            // Inside this block, you can access $USERNAME and $PASSWORD
-                            sh "echo Username: \$USERNAME"
-                            sh "echo Password: \$PASSWORD"
-                        }
+                        // withCredentials([usernamePassword(credentialsId: 'Twilio', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        //     // Inside this block, you can access $USERNAME and $PASSWORD
+                        //     sh "echo Username: \$USERNAME"
+                        //     sh "echo Password: \$PASSWORD"
+                        // }
+
                         // Kill X11 server - common error fix
                         sh 'pkill Xvfb'
 
-                        echo 'debugEnvironment variables'
-                        echo "Both: $TWILIO"
-                        echo "SID: $TWILIO_USR"
-                        echo "AUTH_TOKEN: $TWILIO_PSW"
+                        sendSMS()
 
-                        // GET
-                        // def get = new URL("https://api.twilio.com/2010-04-01/Accounts/AC4e8cda28ac14de11c81b648d58f5c5e4/Messages.json").openConnection();
-                        // def getRC = get.getResponseCode();
-                        // println(getRC);
-                        // echo "test http: - (${getRC})"
-                        // if(getRC.equals(200)) {
-                        //     println(get.getInputStream().getText());
-                        // }
-
-                        // def result = HttpBuilder.configure {
-                        //     request.raw = "https://api.twilio.com/2010-04-01/Accounts/AC4e8cda28ac14de11c81b648d58f5c5e4/Messages.json"
-                        // }.get()
-
-                        // POST
-                        def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
-
-                        // Payload structure because content-type x-www-form-urlencoded
-                        String urlParameters  = "From=+15392081457&To=+4916091961830&Body=this is a HNS TEST message";
-
-                        // Set up HTTP headers for authentication
-                        // String authString = "ACdc2fbf07b600ebc3664cbaa69c68825c:9799464121df1f0600630a9199402d07"
-                        String authString = "$TWILIO"
-                        echo "authString"
-                        println(authString)
-                        byte[] encodedAuth = org.apache.commons.codec.binary.Base64.encodeBase64(authString.getBytes("UTF-8"));
-                        echo "encodedAuth"
-                        println(encodedAuth)
-                        String authHeaderValue = "Basic " + new String(encodedAuth);
-                        echo "authHeaderValue"
-                        println(authHeaderValue)
-                        post.setRequestProperty("Authorization", authHeaderValue)
-                        post.setRequestMethod("POST")
-                        post.setDoOutput(true)
-                        post.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
-                        post.getOutputStream().write(urlParameters.getBytes("UTF-8"));
-                        def postRC = post.getResponseCode();
-                        println(postRC);
-                        if(postRC.equals(200)) {
-                            println(post.getInputStream().getText());
-                        } else {
-                            println(post.getErrorStream().getText());
-                        }
                     } catch (Exception e) {
                         echo "Post Always excecution error: - (${e})!"
                     }
@@ -147,6 +128,7 @@ pipeline {
                         
                         For comprehensive documentation on the Jenkins Auto-Test process please visit
                         https://hotelnetsolutions.atlassian.net/wiki/spaces/DEV/pages/272728066/Jenkins+Auto-Test+guide"""
+  
                 }
             }
         }
