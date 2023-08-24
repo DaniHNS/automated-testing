@@ -10,10 +10,11 @@ def sendSMS() {
     for(phone_number in array) { 
         // POST
         def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
-        String smsBody = """
+        String smsBody = """HNS Notification
         Job ${env.JOB_NAME}
         Status ${currentBuild.currentResult}
-        Link: ${env.BUILD_URL}"""
+        Link: ${env.BUILD_URL}
+        """
         // Payload structure because content-type x-www-form-urlencoded
         // String urlParameters  = "From=+15392081457&To=" + "${phone_number}" + "&Body=" + "Job ${env.JOB_NAME} " + "Status ${currentBuild.currentResult} " + "Link: " + "${env.BUILD_URL}";
         String urlParameters  = "From=+15392081457&To=" + "${phone_number}" + "&Body=${smsBody}";
