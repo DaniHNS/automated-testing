@@ -13,7 +13,7 @@ def sendSMS() {
         def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
 
         // Payload structure because content-type x-www-form-urlencoded
-        String urlParameters  = "From=+15392081457&To=" + "${phone_number}" + "&Body=" + "Job ${env.JOB_NAME}" + "HNS TEST" + ${movieLink} + ".";
+        String urlParameters  = "From=+15392081457&To=" + "${phone_number}" + "&Body=" + "Job ${env.JOB_NAME}" + "HNS TEST" + "Link: ${movieLink}" + ".";
 
         // Set up HTTP headers for authentication
         String authString = "$TWILIO"
