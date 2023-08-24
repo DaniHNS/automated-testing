@@ -3,19 +3,17 @@
 def runCypressTests() {
     sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
 }
-
+// Function to send SMS notification
 def sendSMS() {
-
-    array = ["+4916091961830", "+4915231671270"];
-
+    def movieLink = '''<a href="http://jenkins.hns.hotelnetsolutions.de/workspace/BookingE2E-V5/cypress/videos/" target="_blank">Click Here</a>'''
+    // array = ["+4916091961830", "+4915231671270"];
+    array = ["+4916091961830"];
     for(phone_number in array) { 
-        println(phone_number); 
-   
         // POST
         def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
 
         // Payload structure because content-type x-www-form-urlencoded
-        String urlParameters  = "From=+15392081457&To=" + "${phone_number}" + "&Body=this is a HNS TEST message";
+        String urlParameters  = "From=+15392081457&To=" + "${phone_number}" + "&Body=" + "Job ${env.JOB_NAME}" + "HNS TEST" + ${movieLink} + ".";
 
         // Set up HTTP headers for authentication
         String authString = "$TWILIO"
@@ -33,6 +31,7 @@ def sendSMS() {
         }  
     }
 }
+
 def maxRetries = 2
 def retryCount = 0
 def retryInterval = 20 // seconds
