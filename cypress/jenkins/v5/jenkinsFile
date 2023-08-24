@@ -5,7 +5,8 @@ def runCypressTests() {
 }
 // Function to send SMS notification
 def sendSMS() {
-    def movieLink = '''<a href="http://jenkins.hns.hotelnetsolutions.de/workspace/BookingE2E-V5/cypress/videos/" target="_blank">Click Here</a>'''
+    def movieLink = "[Click Here] (http://jenkins.hns.hotelnetsolutions.de/workspace/BookingE2E-V5/cypress/videos/)"
+
     // array = ["+4916091961830", "+4915231671270"];
     array = ["+4916091961830"];
     for(phone_number in array) { 
@@ -13,7 +14,7 @@ def sendSMS() {
         def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
 
         // Payload structure because content-type x-www-form-urlencoded
-        String urlParameters  = "From=+15392081457&To=" + "${phone_number}" + "&Body=" + "Job ${env.JOB_NAME}" + "HNS TEST" + "Link: ${movieLink}" + ".";
+        String urlParameters  = "From=+15392081457&To=" + "${phone_number}" + "&Body=" + "Job ${env.JOB_NAME}" + "HNS TEST" + "Link: [Click Here] (http://jenkins.hns.hotelnetsolutions.de/workspace/BookingE2E-V5/cypress/videos/)" + "${movieLink}";
 
         // Set up HTTP headers for authentication
         String authString = "$TWILIO"
