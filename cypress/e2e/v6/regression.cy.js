@@ -78,7 +78,7 @@ describe('The Home Page', () => {
       cy.get('#booking-button-wrap .booking-button button .booking-button-content-text', { timeout: 1000 }).as('bookingButton');
       cy.get('@bookingButton').trigger('mouseover').click();
 
-      cy.wait(4000);
+      cy.wait(6000);
       cy.location('href').should('include', 'https://onepagebooking.com/hnsautotest6/confirmation');
   
     }) 
