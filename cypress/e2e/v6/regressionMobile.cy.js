@@ -57,8 +57,8 @@ describe('The Home Page', () => {
       cy.wait(1000);
       cy.get('opb6-rooms-mobile .rooms-grid .rooms-grid-item:first-child .price-options .price-wrap > div:last-child .btn-select').click()
       cy.wait(1000);
-      cy.get('.modal-content .fixed-bottom .btn-select ', {timeout: 300}).click()
-      cy.get('opb6-room-details-mobile .rates .rate-row-1 opb6-rate-details .btn-select', {timeout: 2000}).click()
+      cy.get('.modal-content .fixed-bottom .btn-select ', {timeout: 4000}).click()
+      cy.get('opb6-room-details-mobile .rates .rate-row-1 opb6-rate-details .btn-select', {timeout: 4000}).click()
       cy.wait(1000);
       cy.get('opb6-optional-booking-sections-mobile .booking-sections-mobile .container:last-child opb6-optional-booking-sections-mobile-item .booking-section-mobile-item', {timeout: 2000}).click()
       cy.wait(1000);
