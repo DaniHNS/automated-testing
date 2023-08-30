@@ -1,47 +1,92 @@
+// Function to run Cypress tests
+def runCypressTests() {
+    sh 'npx cypress run --spec "cypress/e2e/v6/**/*.cy.js" --headless'
+}
+def maxRetries = 2
+def retryCount = 0
+def retryInterval = 20 // seconds
+env.retryOccurred = 'false'
+
 pipeline {
     agent any
     tools {nodejs "node"}
+    parameters {
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+    }
     stages {        
         stage('CleanUp') {
             steps {
-                script {
-                   sh "git clean -x -f"
+                    script {
+                        sh "git clean -x -f"
+                        // npm clear cache
+                        sh "rm -rf ~/.cache/Cypress"
+                        sh 'npm cache clean --force'
+                    }
                 }
             }
-        }  
         stage('Build') {
             steps {
                 // Checkout source code from version control (e.g., Git)
-                git url: 'https://github.com/DaniHNS/automated-testing.git'
+                git branch: "${params.BRANCH}",  url: 'https://github.com/DaniHNS/automated-testing.git'
+                
                 // npm check
                 sh 'npm -v'
                 // Install project dependencies
                 sh 'npm install'
+                sh 'npm install -g cypress@13.0.0'
+                sh 'cypress install'
                 // Set X11 server - common error fix
                 sh 'Xvfb -screen 0 1920x1080x24 :99 & export DISPLAY=:99'
             }
         }  
         stage('Run Tests') {
             steps {
-                // Run Cypress tests
-                sh 'npx cypress run --spec "cypress/e2e/v6/**/*.cy.js" --headless'
+                script {
+                    try {
+                        runCypressTests()
+                        // If try fails catch block will trigger the test once again after delay
+                    } catch (Exception e) {
+                        retryCount++
+                        echo "Retrying (${retryCount}/${maxRetries})..."
+                        env.retryOccurred = 'true'
+                        echo "retryOccurred (${env.retryOccurred})..."
+                        sleep(time: retryInterval, unit: 'SECONDS')
+                        runCypressTests()
+                    }
+                    
+                }
             }
         }
-          
     }
     post {
         always {
-            // Kill X11 server - common error fix
-            sh 'pkill Xvfb'
+            script {
+                    try {
+                        // Kill X11 server - common error fix
+                        sh 'pkill Xvfb'
+                    } catch (Exception e) {
+                        echo "Post Always excecution error: - (${e})!"
+                    }
+            }
         }
         failure {  
-            // mail to: "kaske@hotelnetsolutions.de, richter@hotelnetsolutions.de, tehrani@hotelnetsolutions.de, plotkin@hotelnetsolutions.de",
-            mail to: "plotkin@hotelnetsolutions.de",
-            subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
-            body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
-        More Info can be found here: ${env.BUILD_URL}
-        Video can be found here: http://jenkins.hns.hotelnetsolutions.de/workspace/BookingE2E-V6/cypress/videos/
-        Trigger the Job: http://jenkins.hns.hotelnetsolutions.de:8081/job/BookingE2E-V6/build?token=Gthr1_8"""
+            script {
+                echo "Always - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
+                // Mail conditioned on Failure on both attempts
+                if (currentBuild.currentResult == 'FAILURE' && env.retryOccurred == 'true') {
+                    echo "Mail sending block - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
+                 // mail to: "kaske@hotelnetsolutions.de, richter@hotelnetsolutions.de, tehrani@hotelnetsolutions.de, plotkin@hotelnetsolutions.de",
+                    mail to: "plotkin@hotelnetsolutions.de",
+                    subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
+                    body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
+                        More Information can be found here: ${env.BUILD_URL}
+                        Video can be found here: http://jenkins.hns.hotelnetsolutions.de/workspace/BookingE2E-V6/cypress/videos/
+                        Trigger/Start the Job: http://jenkins.hns.hotelnetsolutions.de:8081/job/BookingE2E-V6/build?token=Gthr1_8
+                        
+                        For comprehensive documentation on the Jenkins Auto-Test process please visit
+                        https://hotelnetsolutions.atlassian.net/wiki/spaces/DEV/pages/272728066/Jenkins+Auto-Test+guide"""
+                }
+            }
          }
     }
 }
