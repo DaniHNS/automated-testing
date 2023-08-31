@@ -18,9 +18,6 @@ describe('The Home Page', () => {
 
       cy.visit('https://onepagebooking.com/hnsautotest6?arrival=24.' + month + '.' + year + '&departure=26.' + month + '.' + year + '&rooms=1&adults=1') // change URL to match your dev URL
 
-      // const time = new Date().getTime();
-      // cy.visit('https://onepagebooking.com/hnsautotest6?t='+time) // change URL to match your dev URL
-
       // uncaught:exception handler 
       cy.on('uncaught:exception', (err, runnable) => {
         // Check if the error is a SyntaxError due to cache after deployment
@@ -39,59 +36,30 @@ describe('The Home Page', () => {
       });
 
       cy.get('body.is-mobile', { timeout: 1000 }).should('be.visible');
-      // cy.get('a.nav-element-link[href="/hotelns5/location"]', {timeout: 4000}).click() // change URL to match your dev URL
-      // cy.get('opb6-booking-config-mobile ul li:nth-child(2) button').click() 
-
-      // cy.get('#guests-config-wrap ul li:first-child .row div:last-child .person-number-config-button:first-child button', {timeout: 300}).click() // parents count +1
-      // cy.get('#guests-config-wrap ul li.children-amount-config .row div:last-child .person-number-config-button:first-child button', {timeout: 300}).click() 
-      // cy.get('app-child-config .child-config-row .child-age-item .dropdown.open', {timeout: 300}).click() 
-      // cy.get('app-child-config .child-config-row .child-age-item ul.dropdown-menu li:nth-child(3)', {timeout: 300}).click() 
-      // cy.get('app-masthead-room-options #guests-config-toggle .icons-wrap').click() 
-      // cy.wait(1000);
-      //cy.get('opb6-calendar-mobile-modal opb6-calendar-mobile .months-wrap.table-wrap > div:nth-child(2) opb6-month-table .more-than-two-months.is-mobile p.day:contains("25")', {timeout: 1000}).should('be.visible')
-      //cy.get('opb6-calendar-mobile-modal opb6-calendar-mobile .months-wrap.table-wrap > div:nth-child(2) opb6-month-table .more-than-two-months.is-mobile p.day:contains("26")', {timeout: 1000}).should('be.visible')
-      //cy.get('opb6-calendar-mobile-modal opb6-calendar-mobile .months-wrap.table-wrap > div:nth-child(2) opb6-month-table .more-than-two-months.is-mobile p.day:contains("25")', {timeout: 1000}).click() 
-      //cy.get('opb6-calendar-mobile-modal opb6-calendar-mobile .months-wrap.table-wrap > div:nth-child(2) opb6-month-table .more-than-two-months.is-mobile p.day:contains("26")', {timeout: 1000}).click()
-
-     // cy.get('.modal-content .fixed-bottom .btn-select.btn-config-ready ', {timeout: 300}).click()
+      cy.wait(4000);
+      cy.get('opb6-rooms-mobile .rooms-grid .rooms-grid-item:first-child .price-options .price-wrap > div:last-child .btn-select', {timeout: 4000}).click({force: true})
       cy.wait(1000);
-      cy.get('opb6-rooms-mobile .rooms-grid .rooms-grid-item:first-child .price-options .price-wrap > div:last-child .btn-select').click()
+      cy.get('.modal-content .fixed-bottom .btn-select ', {timeout: 4000}).click({force: true})
+      cy.get('opb6-room-details-mobile .rates .rate-row-1 opb6-rate-details .btn-select', {timeout: 4000}).click({force: true})
       cy.wait(1000);
-      cy.get('.modal-content .fixed-bottom .btn-select ', {timeout: 4000}).click()
-      cy.get('opb6-room-details-mobile .rates .rate-row-1 opb6-rate-details .btn-select', {timeout: 4000}).click()
-      cy.wait(1000);
-      cy.get('opb6-optional-booking-sections-mobile .booking-sections-mobile .container:last-child opb6-optional-booking-sections-mobile-item .booking-section-mobile-item', {timeout: 2000}).as('btnMobItem')
+      cy.get('opb6-optional-booking-sections-mobile .booking-sections-mobile .container:last-child opb6-optional-booking-sections-mobile-item .booking-section-mobile-item', {timeout: 4000}).as('btnMobItem')
       cy.get('@btnMobItem').click({force: true});
       cy.wait(1000);
-      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).should('be.visible') //lazy loaded
-      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).type("Daniel")
-      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #lastName', {timeout: 1000}).should('be.visible') //lazy loaded
-      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #lastName', {timeout: 1000}).type("Plotkin")
-      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap input#email', {timeout: 1000}).should('be.visible') //lazy loaded
-      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap input#email', {timeout: 1000}).type('testing@hotelnetsolutions.com')
-      // cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).should('be.visible') //lazy loaded
-      // cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).type("Daniel")
-
-
-
-      // cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#prename').type('Test')
-      // cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#name').type('Test') 
-      // cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#email').type('plotkin@hotelnetsolutions.de')
-     
-      // cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#telnumber').type('0305555555') 
-      // cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#street').type('Genthiner Str.') 
-      // cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#street_number').type('8') 
-      // cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#postal_code').type('10875') 
-      // cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#locality').type('Berlin') 
+      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 4000}).should('be.visible') //lazy loaded
+      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 4000}).type("Daniel")
+      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #lastName', {timeout: 4000}).should('be.visible') //lazy loaded
+      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #lastName', {timeout: 4000}).type("Plotkin")
+      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap input#email', {timeout: 4000}).should('be.visible') //lazy loaded
+      cy.get('opb6-order-form form .form-section-wrap .group-main-wrap input#email', {timeout: 4000}).type('testing@hotelnetsolutions.com')
 
       //Final booking action
-      // cy.get('#booking-wrap .optin-wrap input[name="cb-red-carpet"] + label[for="cb-acceptAgbs-1"]').click({ force: true })
       cy.scrollTo('bottom')
-      cy.get('#booking-button-wrap .booking-button button', {timeout: 1000}).should('be.visible')
-      cy.get('#booking-button-wrap .booking-button button', {timeout: 4000}).trigger('mouseover').click();
-      // cy.get('#booking-button-wrap .booking-button button').trigger('click')
-      cy.wait(6000);
-      cy.location('href').should('include', 'https://onepagebooking.com/hnsautotest6/confirmation');
+      cy.get('#booking-button-wrap .booking-button button', {timeout: 2000}).should('be.visible')
+      // cy.get('#booking-button-wrap .booking-button button', {timeout: 4000}).trigger('mouseover').click({force: true});
+      cy.get('#booking-button-wrap .booking-button button .booking-button-content-text', { timeout: 4000 }).as('bookingButton');
+      cy.get('@bookingButton').trigger('mouseover').click();
+      cy.wait(1000);
+      cy.location('href', { timeout: 10000 }).should('include', 'https://onepagebooking.com/hnsautotest6/confirmation');
   
     }) 
     })
