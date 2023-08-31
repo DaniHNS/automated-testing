@@ -21,7 +21,7 @@ pipeline {
                     // npm clear cache
                     sh "rm -rf ~/.cache/Cypress"
                     sh 'npm cache clean --force'
-                    sh "rm -rf node_modules package-lock.json"
+                    sh "rm -rf package-lock.json"
                 }
             }
         }  
@@ -35,7 +35,7 @@ pipeline {
                 // Install project dependencies
                 sh 'npm install'
                 sh 'npm install cypress@13.0.0'
-                sh 'cypress install'
+                // sh 'cypress install'
                 // Set X11 server - common error fix
                 sh 'Xvfb -screen 0 1920x1080x24 :99 & export DISPLAY=:99'               
             }
