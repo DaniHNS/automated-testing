@@ -5,8 +5,8 @@ def runCypressTests() {
 }
 // Function to send SMS notification
 def sendSMS() {
-    // array = ["+4916091961830", "+4915231671270"];
-    array = ["+4916091961830"];
+    array = ["+491708882787", "+4916091961830"];
+
     for(phone_number in array) { 
         // POST call
         def post = new URL("https://api.twilio.com/2010-04-01/Accounts/AC8e38b38a2deda2084a112d2224bda2e6/Messages.json").openConnection();
@@ -99,13 +99,6 @@ pipeline {
         always {
             script {
                     try {
-                        // Use the credentials in your script
-                        // withCredentials([usernamePassword(credentialsId: 'Twilio', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        //     // Inside this block, you can access $USERNAME and $PASSWORD
-                        //     sh "echo Username: \$USERNAME"
-                        //     sh "echo Password: \$PASSWORD"
-                        // }
-
                         // Kill X11 server - common error fix
                         sh 'pkill Xvfb'
 
