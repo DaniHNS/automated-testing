@@ -9,7 +9,7 @@ def sendSMS() {
     array = ["+4916091961830"];
     for(phone_number in array) { 
         // POST call
-        def post = new URL("https://api.twilio.com/2010-04-01/Accounts/ACdc2fbf07b600ebc3664cbaa69c68825c/Messages.json").openConnection();
+        def post = new URL("https://api.twilio.com/2010-04-01/Accounts/AC8e38b38a2deda2084a112d2224bda2e6/Messages.json").openConnection();
         // sms content message
         String smsBody = """HNS Notification
         Job ${env.JOB_NAME}
@@ -18,7 +18,7 @@ def sendSMS() {
         """
         // Payload structure because content-type x-www-form-urlencoded
         // String urlParameters  = "From=+15392081457&To=" + "${phone_number}" + "&Body=" + "Job ${env.JOB_NAME} " + "Status ${currentBuild.currentResult} " + "Link: " + "${env.BUILD_URL}";
-        String urlParameters  = "From=+15392081457&To=" + "${phone_number}" + "&Body=${smsBody}";
+        String urlParameters  = "From=+3197010204107&To=" + "${phone_number}" + "&Body=${smsBody}";
         // Set up HTTP headers for authentication
         String authString = "$TWILIO"
         byte[] encodedAuth = org.apache.commons.codec.binary.Base64.encodeBase64(authString.getBytes("UTF-8"));
