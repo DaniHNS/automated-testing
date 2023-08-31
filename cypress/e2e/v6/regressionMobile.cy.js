@@ -60,7 +60,8 @@ describe('The Home Page', () => {
       cy.get('.modal-content .fixed-bottom .btn-select ', {timeout: 4000}).click()
       cy.get('opb6-room-details-mobile .rates .rate-row-1 opb6-rate-details .btn-select', {timeout: 4000}).click()
       cy.wait(1000);
-      cy.get('opb6-optional-booking-sections-mobile .booking-sections-mobile .container:last-child opb6-optional-booking-sections-mobile-item .booking-section-mobile-item', {timeout: 2000}).click()
+      cy.get('opb6-optional-booking-sections-mobile .booking-sections-mobile .container:last-child opb6-optional-booking-sections-mobile-item .booking-section-mobile-item', {timeout: 2000}).as('btnMobItem')
+      cy.get('@btnMobItem').click({force: true});
       cy.wait(1000);
       cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).should('be.visible') //lazy loaded
       cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).type("Daniel")
