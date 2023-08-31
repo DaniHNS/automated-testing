@@ -33,7 +33,7 @@ pipeline {
                 sh 'npm -v'
                 // Install project dependencies
                 sh 'npm install'
-                // sh 'npm install -g cypress@13.0.0'
+                sh 'npm install -g cypress@13.0.0'
                 sh 'cypress install'
                 // Set X11 server - common error fix
                 sh 'Xvfb -screen 0 1920x1080x24 :99 & export DISPLAY=:99'
