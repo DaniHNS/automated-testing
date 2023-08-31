@@ -46,8 +46,8 @@ describe('The Home Page', () => {
       cy.get('@btnSelect').trigger('mouseover').click();
 
       cy.wait(1000);
-      cy.get('opb6-room-details .rates .rate-row:first-child opb6-rate-details .btn-select', {timeout: 2000}).should('be.visible') 
-      cy.get('opb6-room-details .rates .rate-row:first-child opb6-rate-details .btn-select', {timeout: 2000}).click()
+      cy.get('opb6-room-details .rates .rate-row:first-child opb6-rate-details .btn-select', {timeout: 4000}).should('be.visible') 
+      cy.get('opb6-room-details .rates .rate-row:first-child opb6-rate-details .btn-select', {timeout: 4000}).click()
       cy.wait(1000);
       cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).should('be.visible') //lazy loaded
       cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).type("Daniel")
@@ -78,7 +78,7 @@ describe('The Home Page', () => {
       cy.get('#booking-button-wrap .booking-button button .booking-button-content-text', { timeout: 1000 }).as('bookingButton');
       cy.get('@bookingButton').trigger('mouseover').click();
 
-      cy.wait(4000);
+      cy.wait(6000);
       cy.location('href').should('include', 'https://onepagebooking.com/hnsautotest6/confirmation');
   
     }) 

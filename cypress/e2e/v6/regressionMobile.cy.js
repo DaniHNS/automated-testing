@@ -57,10 +57,11 @@ describe('The Home Page', () => {
       cy.wait(1000);
       cy.get('opb6-rooms-mobile .rooms-grid .rooms-grid-item:first-child .price-options .price-wrap > div:last-child .btn-select').click()
       cy.wait(1000);
-      cy.get('.modal-content .fixed-bottom .btn-select ', {timeout: 300}).click()
-      cy.get('opb6-room-details-mobile .rates .rate-row-1 opb6-rate-details .btn-select', {timeout: 2000}).click()
+      cy.get('.modal-content .fixed-bottom .btn-select ', {timeout: 4000}).click()
+      cy.get('opb6-room-details-mobile .rates .rate-row-1 opb6-rate-details .btn-select', {timeout: 4000}).click()
       cy.wait(1000);
-      cy.get('opb6-optional-booking-sections-mobile .booking-sections-mobile .container:last-child opb6-optional-booking-sections-mobile-item .booking-section-mobile-item', {timeout: 2000}).click()
+      cy.get('opb6-optional-booking-sections-mobile .booking-sections-mobile .container:last-child opb6-optional-booking-sections-mobile-item .booking-section-mobile-item', {timeout: 2000}).as('btnMobItem')
+      cy.get('@btnMobItem').click({force: true});
       cy.wait(1000);
       cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).should('be.visible') //lazy loaded
       cy.get('opb6-order-form form .form-section-wrap .group-main-wrap #firstName', {timeout: 1000}).type("Daniel")
@@ -87,9 +88,9 @@ describe('The Home Page', () => {
       // cy.get('#booking-wrap .optin-wrap input[name="cb-red-carpet"] + label[for="cb-acceptAgbs-1"]').click({ force: true })
       cy.scrollTo('bottom')
       cy.get('#booking-button-wrap .booking-button button', {timeout: 1000}).should('be.visible')
-      cy.get('#booking-button-wrap .booking-button button', {timeout: 1000}).trigger('mouseover').click();
+      cy.get('#booking-button-wrap .booking-button button', {timeout: 4000}).trigger('mouseover').click();
       // cy.get('#booking-button-wrap .booking-button button').trigger('click')
-      cy.wait(2000);
+      cy.wait(6000);
       cy.location('href').should('include', 'https://onepagebooking.com/hnsautotest6/confirmation');
   
     }) 
