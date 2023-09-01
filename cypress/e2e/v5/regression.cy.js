@@ -41,13 +41,13 @@ describe('The Home Page', () => {
       cy.wait(2000);
       cy.get('opb-room-details #available-rates > div > div:first-child .select-button-wrap > button', {timeout: 5000}).should('not.be.disabled')
       
-      cy.get('opb-room-details #available-rates > div > div:first-child .select-button-wrap > button', {timeout: 1000}).click()
+      cy.get('opb-room-details #available-rates > div > div:first-child .select-button-wrap > button', {timeout: 4000}).click()
       // cy.get('app-next-step-button #next-step-overscroll', {timeout: 2000}).click()
       
     
       cy.get('opb-address-form form > #address-form-fields-wrap', {timeout: 1000}).should('be.visible') //lazy loaded
-      cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row:first-child .dropdown.open .form-control.ui-select-toggle ', {timeout: 100}).click() 
-      cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row:first-child .dropdown.open ul.dropdown-menu li:first-child a').click() 
+      cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row:first-child .dropdown.open .form-control.ui-select-toggle ', {timeout: 4000}).click() 
+      cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row:first-child .dropdown.open ul.dropdown-menu li:first-child a', {timeout: 4000}).click() 
       cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#prename').type('Test')
       cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#name').type('Test') 
       cy.get('opb-address-form form > #address-form-fields-wrap .form-field-row input#email').type('testing@hotelnetsolutions.com')
@@ -64,7 +64,7 @@ describe('The Home Page', () => {
       cy.get('#booking-wrap #booking-btn-wrap #submit-btn-wrap button', {timeout: 100}).should('be.visible')
       cy.get('#booking-wrap #booking-btn-wrap #submit-btn-wrap button').click()
       cy.wait(2000);
-      cy.location('href').should('include', 'https://onepagebooking.com/hnsautotest5/confirmation');
+      cy.location('href', { timeout: 10000 }).should('include', 'https://onepagebooking.com/hnsautotest5/confirmation');
   
     })
     // it('successfully selected calendar days', () => {
