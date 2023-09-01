@@ -126,7 +126,7 @@ pipeline {
                         For comprehensive documentation on the Jenkins Auto-Test process please visit
                         https://hotelnetsolutions.atlassian.net/wiki/spaces/DEV/pages/272728066/Jenkins+Auto-Test+guide"""
 
-                   // sendSMS()    
+                    sendSMS()    
                         
                 }
             }
