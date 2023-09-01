@@ -1,7 +1,41 @@
+
 // Function to run Cypress tests
 def runCypressTests() {
     sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
 }
+// Function to send SMS notification
+def sendSMS() {
+    array = ["+491708882787", "+491723228080", "+4916091961830"];
+
+    for(phone_number in array) { 
+        // POST call
+        def post = new URL("https://api.twilio.com/2010-04-01/Accounts/AC8e38b38a2deda2084a112d2224bda2e6/Messages.json").openConnection();
+        // sms content message
+        String smsBody = """HNS Notification
+        Job ${env.JOB_NAME}
+        Status ${currentBuild.currentResult}
+        Link: ${env.BUILD_URL}
+        """
+        // Payload structure because content-type x-www-form-urlencoded
+        // String urlParameters  = "From=+15392081457&To=" + "${phone_number}" + "&Body=" + "Job ${env.JOB_NAME} " + "Status ${currentBuild.currentResult} " + "Link: " + "${env.BUILD_URL}";
+        String urlParameters  = "From=+3197010204107&To=" + "${phone_number}" + "&Body=${smsBody}";
+        // Set up HTTP headers for authentication
+        String authString = "$TWILIO"
+        byte[] encodedAuth = org.apache.commons.codec.binary.Base64.encodeBase64(authString.getBytes("UTF-8"));
+        String authHeaderValue = "Basic " + new String(encodedAuth);
+        post.setRequestProperty("Authorization", authHeaderValue)
+        post.setRequestMethod("POST")
+        post.setDoOutput(true)
+        post.setRequestProperty("Content-Type", "application/x-www-form-urlencoded")
+        post.getOutputStream().write(urlParameters.getBytes("UTF-8"));
+        def postRC = post.getResponseCode();
+        println(postRC);
+        if(postRC.equals(200)) {
+            println(post.getInputStream().getText());
+        }  
+    }
+}
+
 def maxRetries = 2
 def retryCount = 0
 def retryInterval = 20 // seconds
@@ -9,6 +43,9 @@ env.retryOccurred = 'false'
 
 pipeline {
     agent any
+    environment {
+        TWILIO = credentials('Twilio')
+    }
     tools {nodejs "node"}
     parameters {
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
@@ -65,9 +102,12 @@ pipeline {
                     try {
                         // Kill X11 server - common error fix
                         sh 'pkill Xvfb'
+
                     } catch (Exception e) {
                         echo "Post Always excecution error: - (${e})!"
                     }
+
+
             }
         }
         failure {
@@ -76,8 +116,8 @@ pipeline {
                 // Mail conditioned on Failure on both attempts
                 if (currentBuild.currentResult == 'FAILURE' && env.retryOccurred == 'true') {
                     echo "Mail sending block - Status/retry(${currentBuild.currentResult}/${env.retryOccurred})..."  
-                    mail to: "kaske@hotelnetsolutions.de, richter@hotelnetsolutions.de, tehrani@hotelnetsolutions.de, plotkin@hotelnetsolutions.de",
-                 //   mail to: "plotkin@hotelnetsolutions.de",
+                   // mail to: "kaske@hotelnetsolutions.de, richter@hotelnetsolutions.de, tehrani@hotelnetsolutions.de, plotkin@hotelnetsolutions.de",
+                    mail to: "plotkin@hotelnetsolutions.de",
                     subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}",
                     body: """${currentBuild.currentResult}: Job ${env.JOB_NAME}
                         More Information can be found here: ${env.BUILD_URL}
@@ -86,6 +126,9 @@ pipeline {
                         
                         For comprehensive documentation on the Jenkins Auto-Test process please visit
                         https://hotelnetsolutions.atlassian.net/wiki/spaces/DEV/pages/272728066/Jenkins+Auto-Test+guide"""
+
+                    sendSMS()    
+  
                 }
             }
         }
