@@ -5,7 +5,7 @@ def runCypressTests() {
 }
 // Function to send SMS notification
 def sendSMS() {
-    array = ["+491708882787", "+4916091961830"];
+    array = ["+491708882787", "+491723228080", "+4916091961830"];
 
     for(phone_number in array) { 
         // POST call
