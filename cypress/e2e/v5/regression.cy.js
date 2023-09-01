@@ -12,8 +12,8 @@ describe('The Home Page', () => {
       year = month == 13 ? (year + 1) : year;
       month = month == 13 ? 1 : month;
     
-      // cy.visit('https://onepagebooking.com/hnsautotest5?arrival=24.' + month + '.' + year + '&departure=26.' + month + '.' + year + '&rooms=1&adults=1') // change URL to match your dev URL
-       cy.visit('https://onepagebooking.com/_hnsautotest5?arrival=24.08.23&departure=26.08.23&rooms=1&adults=2') 
+       cy.visit('https://onepagebooking.com/hnsautotest5?arrival=24.' + month + '.' + year + '&departure=26.' + month + '.' + year + '&rooms=1&adults=1') // change URL to match your dev URL
+      // cy.visit('https://onepagebooking.com/_hnsautotest5?arrival=24.08.23&departure=26.08.23&rooms=1&adults=2') 
       // cy.get('a.nav-element-link[href="/hotelns5/location"]', {timeout: 4000}).click() // change URL to match your dev URL
 
       //Test url parameters
