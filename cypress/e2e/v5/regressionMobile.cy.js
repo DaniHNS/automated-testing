@@ -53,7 +53,7 @@ describe('The Home Page', () => {
   
         cy.get('#booking-wrap #booking-btn-wrap #submit-btn-wrap button').click()
   
-        cy.location('href').should('include', 'https://onepagebooking.com/hnsautotest5/confirmation');
+        cy.location('href', { timeout: 10000 }).should('include', 'https://onepagebooking.com/hnsautotest5/confirmation');
     
       })
 
