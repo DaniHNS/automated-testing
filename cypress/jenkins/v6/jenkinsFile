@@ -1,7 +1,7 @@
 
 // Function to run Cypress tests
 def runCypressTests() {
-    sh 'npx cypress run --spec "cypress/e2e/v5/**/*.cy.js" --headless'
+    sh 'npx cypress run --spec "cypress/e2e/v6/**/*.cy.js" --headless'
 }
 // Function to send SMS notification
 def sendSMS() {
