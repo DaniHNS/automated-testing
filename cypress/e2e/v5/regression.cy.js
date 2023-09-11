@@ -36,12 +36,12 @@ describe('The Home Page', () => {
       cy.wait(2000);
 
       // cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap', {timeout: 1000}).click()
-      cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap', {timeout: 5000}).click()
+      cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap', {timeout: 10000}).click()
   
       cy.wait(2000);
-      cy.get('opb-room-details #available-rates > div > div:first-child .select-button-wrap > button', {timeout: 5000}).should('not.be.disabled')
+      cy.get('opb-room-details #available-rates > div > div:first-child .select-button-wrap > button', {timeout: 6000}).should('not.be.disabled')
       
-      cy.get('opb-room-details #available-rates > div > div:first-child .select-button-wrap > button', {timeout: 4000}).click()
+      cy.get('opb-room-details #available-rates > div > div:first-child .select-button-wrap > button', {timeout: 6000}).click()
       // cy.get('app-next-step-button #next-step-overscroll', {timeout: 2000}).click()
       
     

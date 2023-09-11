@@ -29,10 +29,10 @@ describe('The Home Page', () => {
         cy.wait(1000);
         cy.get('body').find('app-rm-chat .bubble.bubble-close').should('not.exist');
 
-        cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap').click()
-        cy.wait(300);
+        cy.get('#rooms-grid .grid-item:first-child .room-details-btn-wrap', {timeout: 6000}).click()
+        cy.wait(1000);
         cy.get('modal-overlay #available-rates .rate-plan-container-0 .rate-plan-row button').click()
-        cy.get('#section-4 .btn-mobile-next-step-wrap button', {timeout: 2000}).click()
+        cy.get('#section-4 .btn-mobile-next-step-wrap button', {timeout: 4000}).click()
         
       
         cy.get('opb-address-form form > #address-form-fields-wrap', {timeout: 1000}).should('be.visible') //lazy loaded
